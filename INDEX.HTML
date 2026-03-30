@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBCS HIPAA & Compliance Mastery Lab — Part 2</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,600&display=swap');
+
+:root{
+  /* Core palette */
+  --ink:#1A1A2E;
+  --ink2:#2C2C4A;
+  --white:#FFFFFF;
+  --bg:#F4F6FB;
+  --bg2:#E8ECF5;
+  --border:#D0D6E8;
+
+  /* Blue */
+  --sky:#1255A3;
+  --sky-d:#0D3F7A;
+  --sky-l:#DBE9FA;
+  --sky-text:#0D2F5C;
+
+  /* Green */
+  --mint:#006B52;
+  --mint-d:#004D3A;
+  --mint-l:#D6F0E8;
+  --mint-text:#003D2C;
+
+  /* Orange/Warning */
+  --sun:#C45000;
+  --sun-d:#943C00;
+  --sun-l:#FDEEDE;
+  --sun-text:#7A3300;
+
+  /* Red */
+  --rose:#A81C1C;
+  --rose-d:#7A1414;
+  --rose-l:#FBE4E4;
+  --rose-text:#6B1111;
+
+  /* Purple */
+  --plum:#51138C;
+  --plum-d:#380A63;
+  --plum-l:#EDE0F8;
+  --plum-text:#360874;
+
+  /* Shadows */
+  --sh:0 2px 10px rgba(0,0,0,.09);
+  --sh2:0 6px 24px rgba(0,0,0,.13);
+  --sh3:0 12px 44px rgba(0,0,0,.17);
+
+  /* Radius */
+  --r:14px;--rs:9px;--rl:22px;
+
+  /* Fonts */
+  --f:'Nunito',sans-serif;
+  --fd:'Playfair Display',serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--f);background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px;line-height:1.65;}
+
+/* ══ TOPBAR ══ */
+.topbar{background:linear-gradient(135deg,#0A2A6E 0%,#1255A3 45%,#51138C 100%);color:#fff;position:sticky;top:0;z-index:300;box-shadow:var(--sh3);}
+.tb-inner{max-width:1140px;margin:0 auto;padding:10px 18px 0;}
+.tb-row1{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:5px;}
+.tb-title{font-family:var(--fd);font-size:.98rem;font-style:italic;color:#fff;line-height:1.2;}
+.tb-title b{font-style:normal;color:#93C5FD;}
+.part-badge{background:rgba(255,255,255,.22);border-radius:20px;padding:2px 11px;font-size:.63rem;font-weight:800;letter-spacing:.06em;color:#fff;}
+.tb-pts{display:flex;gap:7px;margin-left:auto;flex-wrap:wrap;}
+.pt{background:rgba(255,255,255,.18);border-radius:20px;padding:3px 12px;font-size:.7rem;font-weight:800;color:#fff;}
+.pt b{color:#FDE68A;}
+.nav-scroll{overflow-x:auto;scrollbar-width:none;}
+.nav-scroll::-webkit-scrollbar{display:none;}
+.nav{display:flex;gap:3px;padding-top:4px;}
+.ntab{background:rgba(255,255,255,.10);border:none;color:rgba(255,255,255,.75);padding:8px 14px;cursor:pointer;font-size:.67rem;font-weight:800;white-space:nowrap;border-radius:8px 8px 0 0;font-family:var(--f);transition:all .2s;}
+.ntab:hover{background:rgba(255,255,255,.22);color:#fff;}
+.ntab.on{background:#fff;color:#1A1A2E;font-weight:900;}
+
+/* ══ PANELS ══ */
+.page{max-width:1100px;margin:0 auto;padding:26px 18px 70px;}
+.panel{display:none;animation:fadeUp .3s ease;}
+.panel.on{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══ HERO ══ */
+.hero{border-radius:var(--rl);padding:34px 30px;color:#fff;margin-bottom:22px;position:relative;overflow:hidden;}
+.hero-p2{background:linear-gradient(135deg,#0A2A6E 0%,#1255A3 45%,#51138C 100%);}
+.hero-eye{font-size:.67rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:6px;}
+.hero-h{font-family:var(--fd);font-size:1.65rem;line-height:1.2;margin-bottom:9px;color:#fff;}
+.hero-h em{font-style:italic;color:#93C5FD;}
+.hero-p{font-size:.86rem;color:rgba(255,255,255,.9);max-width:560px;line-height:1.65;}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+
+/* ══ SECTION HEADS ══ */
+.eyebrow{font-size:.68rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-bottom:3px;}
+h2.sh{font-family:var(--fd);font-size:1.35rem;color:var(--ink);margin-bottom:5px;line-height:1.3;}
+p.sp{font-size:.84rem;color:#3D4A5C;margin-bottom:16px;line-height:1.65;}
+.divider{height:2px;background:linear-gradient(90deg,var(--sky-l),var(--plum-l),var(--mint-l));border-radius:2px;margin:22px 0;}
+
+/* ══ DIRECTION BOX ══ */
+.dir{background:var(--sky-l);border-left:5px solid var(--sky);border-radius:var(--r);padding:15px 20px;margin-bottom:18px;}
+.dir h3{color:var(--sky-text);font-size:.88rem;font-weight:900;margin-bottom:7px;}
+.dir li{font-size:.81rem;color:#1E3A5A;padding:3px 0 3px 18px;position:relative;list-style:none;}
+.dir li::before{content:"▸";position:absolute;left:0;color:var(--sky);font-size:.68rem;top:5px;}
+
+/* ══ TEACH CARD ══ */
+.teach{background:var(--white);border-radius:var(--r);box-shadow:var(--sh);padding:20px 22px;margin-bottom:12px;}
+.teach.t-sky{border-left:5px solid var(--sky);}
+.teach.t-mint{border-left:5px solid var(--mint);}
+.teach.t-sun{border-left:5px solid var(--sun);}
+.teach.t-rose{border-left:5px solid var(--rose);}
+.teach.t-plum{border-left:5px solid var(--plum);}
+.tlbl{font-size:.62rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;}
+.teach.t-sky .tlbl{color:var(--sky-d);}
+.teach.t-mint .tlbl{color:var(--mint-d);}
+.teach.t-sun .tlbl{color:var(--sun-d);}
+.teach.t-rose .tlbl{color:var(--rose-d);}
+.teach.t-plum .tlbl{color:var(--plum-d);}
+.teach h3{font-size:.97rem;font-weight:900;color:var(--ink);margin-bottom:7px;}
+.teach p,.teach li{font-size:.83rem;line-height:1.7;color:#2E3D4F;}
+.teach ul{padding-left:16px;margin-top:5px;}
+.teach li{margin-bottom:3px;}
+.teach strong{color:var(--ink2);}
+
+/* ══ CHECK-IN BOX ══ */
+.checkin{background:var(--plum-l);border-radius:var(--r);padding:16px 18px;margin:10px 0 20px;}
+.ci-lbl{font-size:.63rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--plum-text);display:flex;align-items:center;gap:5px;margin-bottom:10px;}
+.ci-lbl::before{content:'⬡';font-size:.85rem;color:var(--plum);}
+
+/* ══ QUIZ ══ */
+.qblock{background:var(--white);border-radius:var(--r);box-shadow:var(--sh);padding:18px 20px;margin-bottom:12px;}
+.q-meta{font-size:.62rem;font-weight:900;text-transform:uppercase;letter-spacing:.09em;color:var(--plum);margin-bottom:5px;display:flex;align-items:center;gap:6px;}
+.q-pts{background:var(--plum-l);color:var(--plum-text);border-radius:10px;padding:1px 8px;font-size:.65rem;font-weight:800;}
+.q-text{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.5;margin-bottom:12px;}
+.q-opts{display:flex;flex-direction:column;gap:7px;}
+.q-opt{background:var(--bg);border:2px solid var(--border);border-radius:var(--rs);padding:10px 14px;cursor:pointer;font-size:.82rem;font-family:var(--f);text-align:left;transition:all .22s;color:var(--ink2);line-height:1.4;font-weight:600;}
+.q-opt:hover:not([disabled]){background:var(--sky-l);border-color:var(--sky);color:var(--sky-text);}
+.q-opt.ok{background:var(--mint-l);border-color:var(--mint);color:var(--mint-text);font-weight:800;}
+.q-opt.no{background:var(--rose-l);border-color:var(--rose);color:var(--rose-text);}
+.q-opt[disabled]{cursor:default;}
+
+/* ══ RATIONALE ══ */
+.rat{display:none;margin-top:12px;border-radius:var(--rs);overflow:hidden;}
+.rat.show{display:block;animation:fadeUp .3s;}
+.rat-hd{padding:9px 14px;font-size:.7rem;font-weight:900;text-transform:uppercase;letter-spacing:.07em;display:flex;align-items:center;gap:6px;color:#fff;}
+.rh-ok{background:var(--mint-d);}
+.rh-no{background:var(--rose-d);}
+.rat-bd{background:var(--white);border:1px solid var(--border);border-top:none;padding:12px 14px;font-size:.8rem;line-height:1.65;color:#2E3D4F;}
+.rat-clue{background:var(--sky-l);border:1px solid var(--sky);border-radius:var(--rs);padding:7px 11px;margin-top:7px;font-size:.76rem;color:var(--sky-text);font-weight:700;}
+.rat-trap{background:var(--sun-l);border:1px solid var(--sun);border-radius:var(--rs);padding:7px 11px;margin-top:7px;font-size:.76rem;color:var(--sun-text);font-weight:700;}
+
+/* ══ TRUE/FALSE ══ */
+.tf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin:8px 0;}
+.tf-card{background:var(--white);border-radius:var(--r);box-shadow:var(--sh);padding:15px 17px;border:1px solid var(--border);}
+.tf-stmt{font-size:.84rem;font-weight:700;color:var(--ink);margin-bottom:10px;line-height:1.45;}
+.tf-btns{display:flex;gap:8px;}
+.tf-btn{flex:1;padding:8px;border:2px solid var(--border);border-radius:var(--rs);cursor:pointer;font-size:.79rem;font-weight:800;font-family:var(--f);transition:all .2s;background:var(--white);color:var(--ink2);}
+.tf-btn:hover:not([disabled]){border-color:var(--sky);}
+.tf-ok{background:var(--mint-l)!important;border-color:var(--mint)!important;color:var(--mint-text)!important;}
+.tf-no{background:var(--rose-l)!important;border-color:var(--rose)!important;color:var(--rose-text)!important;}
+.tf-btn[disabled]{cursor:default;}
+.tf-rev{font-size:.77rem;color:#2E3D4F;margin-top:7px;padding:7px 10px;background:var(--bg);border:1px solid var(--border);border-radius:var(--rs);display:none;line-height:1.5;}
+.tf-rev.show{display:block;}
+
+/* ══ COMPARE TABLE ══ */
+.cmp-table{width:100%;border-collapse:collapse;border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);font-size:.8rem;}
+.cmp-table th{background:var(--sky);color:#fff;padding:10px 14px;text-align:left;font-weight:900;font-size:.79rem;}
+.cmp-table td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top;color:#2E3D4F;line-height:1.55;}
+.cmp-table tr:nth-child(even) td{background:var(--bg);}
+.cmp-table tr:hover td{background:var(--sky-l);}
+.tag-sky{display:inline-block;background:var(--sky-l);color:var(--sky-text);border:1px solid var(--sky);border-radius:6px;padding:1px 8px;font-size:.7rem;font-weight:800;}
+.tag-mint{display:inline-block;background:var(--mint-l);color:var(--mint-text);border:1px solid var(--mint);border-radius:6px;padding:1px 8px;font-size:.7rem;font-weight:800;}
+.tag-rose{display:inline-block;background:var(--rose-l);color:var(--rose-text);border:1px solid var(--rose);border-radius:6px;padding:1px 8px;font-size:.7rem;font-weight:800;}
+.tag-sun{display:inline-block;background:var(--sun-l);color:var(--sun-text);border:1px solid var(--sun);border-radius:6px;padding:1px 8px;font-size:.7rem;font-weight:800;}
+.tag-plum{display:inline-block;background:var(--plum-l);color:var(--plum-text);border:1px solid var(--plum);border-radius:6px;padding:1px 8px;font-size:.7rem;font-weight:800;}
+
+/* ══ SCENARIO ══ */
+.scenario{background:linear-gradient(135deg,#FEF6E0,#FFF0D6);border:2px solid #D97706;border-radius:var(--r);padding:13px 17px;margin:10px 0;}
+.sc-lbl{font-size:.62rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#7A4500;margin-bottom:4px;}
+.sc-text{font-size:.85rem;color:#3D2800;line-height:1.6;}
+
+/* ══ ACTIVITY CARD ══ */
+.act-card{background:var(--white);border-radius:var(--r);box-shadow:var(--sh);padding:18px 20px;margin-bottom:12px;border-top:4px solid var(--sky);}
+.act-card.ac-mint{border-top-color:var(--mint);}
+.act-card.ac-plum{border-top-color:var(--plum);}
+.act-card.ac-sun{border-top-color:var(--sun);}
+.act-card.ac-rose{border-top-color:var(--rose);}
+.act-lbl{font-size:.63rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--sky-d);margin-bottom:4px;}
+.act-card.ac-mint .act-lbl{color:var(--mint-d);}
+.act-card.ac-plum .act-lbl{color:var(--plum-d);}
+.act-card.ac-rose .act-lbl{color:var(--rose-d);}
+.act-card h3{font-size:.92rem;font-weight:800;color:var(--ink);margin-bottom:6px;}
+.act-card p,.act-card li{font-size:.82rem;color:#2E3D4F;line-height:1.65;}
+.act-card ul{padding-left:15px;margin-top:5px;}
+
+/* ══ CLICK REVEAL ══ */
+.rev-btn{background:var(--plum-l);border:2px solid var(--plum);color:var(--plum-text);border-radius:var(--rs);padding:7px 15px;font-size:.78rem;font-weight:800;cursor:pointer;font-family:var(--f);transition:all .2s;margin-top:8px;}
+.rev-btn:hover{background:var(--plum);color:#fff;}
+.rev-body{display:none;margin-top:9px;padding:12px 14px;background:var(--plum-l);border:1px solid var(--plum);border-radius:var(--rs);}
+.rev-body.show{display:block;}
+.rev-body p,.rev-body li{font-size:.81rem;color:var(--plum-text);line-height:1.65;}
+
+/* ══ SORT CHIPS ══ */
+.chip-pool{display:flex;flex-wrap:wrap;gap:7px;padding:10px;background:var(--bg2);border-radius:var(--rs);margin-bottom:8px;border:1px solid var(--border);}
+.chip{background:var(--white);border:2px solid var(--border);border-radius:7px;padding:6px 12px;cursor:pointer;font-size:.76rem;font-weight:700;color:var(--ink2);transition:all .2s;user-select:none;}
+.chip:hover{border-color:var(--sky);background:var(--sky-l);color:var(--sky-text);}
+.chip.sel{border-color:var(--sky);background:var(--sky-l);color:var(--sky-text);}
+.chip.chip-ok{border-color:var(--mint);background:var(--mint-l);color:var(--mint-text);cursor:default;}
+.chip.chip-no{border-color:var(--rose);background:var(--rose-l);color:var(--rose-text);}
+.sort-zones{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:8px;}
+.sort-zone{min-height:60px;padding:9px;background:var(--white);border-radius:var(--rs);border:2px dashed var(--border);transition:border-color .2s;}
+.sort-zone:hover{border-color:var(--sky);}
+.sz-lbl{font-size:.68rem;font-weight:900;text-transform:uppercase;margin-bottom:5px;color:var(--ink2);}
+
+/* ══ NOTIF ══ */
+#notif{position:fixed;top:82px;right:18px;background:var(--mint);color:#fff;border-radius:var(--rs);padding:10px 16px;font-size:.8rem;font-weight:800;box-shadow:var(--sh3);z-index:999;transform:translateX(140%);transition:transform .3s;border:2px solid var(--mint-d);}
+#notif.show{transform:translateX(0);}
+#notif.bad{background:var(--rose);border-color:var(--rose-d);}
+
+/* ══ BUTTONS ══ */
+.btn{border:none;border-radius:var(--rs);padding:9px 20px;font-size:.82rem;font-weight:900;cursor:pointer;font-family:var(--f);transition:all .22s;letter-spacing:.02em;}
+.btn-sky{background:var(--sky);color:#fff;border:2px solid var(--sky-d);} .btn-sky:hover{background:var(--sky-d);transform:translateY(-1px);}
+.btn-mint{background:var(--mint);color:#fff;border:2px solid var(--mint-d);} .btn-mint:hover{background:var(--mint-d);}
+.btn-plum{background:var(--plum);color:#fff;border:2px solid var(--plum-d);} .btn-plum:hover{background:var(--plum-d);}
+.btn-sun{background:var(--sun);color:#fff;border:2px solid var(--sun-d);}
+.btn-rose{background:var(--rose);color:#fff;border:2px solid var(--rose-d);}
+.btn-ghost{background:var(--white);border:2px solid var(--border);color:var(--ink2);}
+.btn-ghost:hover{border-color:var(--sky);color:var(--sky);}
+.btn-lg{padding:12px 28px;font-size:.9rem;}
+.btn-sm{padding:6px 13px;font-size:.73rem;}
+
+/* ══ ACCORDION ══ */
+.acc{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:9px;}
+.acc-hdr{background:var(--white);padding:13px 17px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.84rem;border:none;width:100%;text-align:left;font-family:var(--f);color:var(--ink);transition:background .2s;}
+.acc-hdr:hover{background:var(--bg);}
+.acc-hdr.open{background:var(--sky-l);color:var(--sky-text);}
+.acc-arr{transition:transform .3s;font-size:.75rem;}
+.acc-hdr.open .acc-arr{transform:rotate(180deg);}
+.acc-body{display:none;padding:14px 17px;background:var(--white);border-top:1px solid var(--border);font-size:.82rem;line-height:1.7;color:#2E3D4F;}
+.acc-body.open{display:block;}
+
+/* ══ QBANK TABS ══ */
+.stabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px;}
+.stab{background:var(--white);border:2px solid var(--border);border-radius:var(--rs);padding:6px 13px;cursor:pointer;font-size:.74rem;font-weight:800;color:#3D4A5C;transition:all .2s;font-family:var(--f);}
+.stab:hover{border-color:var(--sky);color:var(--sky-text);}
+.stab.on{background:var(--sky);color:#fff;border-color:var(--sky-d);}
+.spanel{display:none;}
+.spanel.on{display:block;animation:fadeUp .25s ease;}
+
+/* ══ CHALLENGE ══ */
+.timer-num{font-size:3.8rem;font-weight:900;line-height:1;color:var(--sky);}
+.timer-num.urgent{color:var(--rose);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.5;}}
+.ch-q-box{background:var(--white);border-radius:var(--r);box-shadow:var(--sh2);padding:22px 24px;margin:14px 0;border:1px solid var(--border);}
+.ch-cat{font-size:.64rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--plum);margin-bottom:7px;}
+.ch-q-text{font-size:.95rem;font-weight:700;color:var(--ink);line-height:1.5;margin-bottom:16px;}
+.ch-opts{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.ch-opt{background:var(--bg);border:2px solid var(--border);border-radius:var(--rs);padding:11px 13px;cursor:pointer;font-size:.82rem;font-weight:700;font-family:var(--f);color:var(--ink2);transition:all .2s;text-align:center;}
+.ch-opt:hover:not([disabled]){background:var(--sky-l);border-color:var(--sky);color:var(--sky-text);}
+.ch-ok{background:var(--mint-l)!important;border-color:var(--mint)!important;color:var(--mint-text)!important;font-weight:900!important;}
+.ch-no{background:var(--rose-l)!important;border-color:var(--rose)!important;color:var(--rose-text)!important;}
+.ch-opt[disabled]{cursor:default;}
+.prog-dots{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin:10px 0;}
+.dot{width:18px;height:7px;border-radius:4px;background:var(--bg2);}
+.dot-ok{background:var(--mint);}
+.dot-no{background:var(--rose);}
+.dot-cur{background:var(--sky);}
+
+/* ══ RESULT ══ */
+.result-box{background:var(--white);border-radius:var(--rl);box-shadow:var(--sh3);padding:30px;text-align:center;max-width:500px;margin:0 auto;border:1px solid var(--border);}
+.result-score{font-size:3rem;font-weight:900;margin:14px 0;}
+.rg-a{color:var(--mint);} .rg-b{color:var(--sky);} .rg-c{color:var(--sun);}
+
+/* ══ RAPID REVIEW ══ */
+.rr-section{margin-bottom:20px;}
+.rr-head{font-size:.8rem;font-weight:900;color:#fff;padding:6px 14px;border-radius:var(--rs);display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;}
+.rr-h-sky{background:var(--sky);}
+.rr-h-mint{background:var(--mint);}
+.rr-h-plum{background:var(--plum);}
+.rr-h-sun{background:var(--sun);}
+.rr-h-rose{background:var(--rose);}
+.rr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:8px;}
+.rr-item{background:var(--white);border-radius:var(--rs);box-shadow:var(--sh);padding:11px 13px;border-left:3px solid var(--sky);border:1px solid var(--border);}
+.rr-item.ri-sky{border-left:3px solid var(--sky);}
+.rr-item.ri-mint{border-left:3px solid var(--mint);}
+.rr-item.ri-plum{border-left:3px solid var(--plum);}
+.rr-item.ri-sun{border-left:3px solid var(--sun);}
+.rr-item.ri-rose{border-left:3px solid var(--rose);}
+.rr-item b{font-size:.77rem;color:var(--sky-d);display:block;margin-bottom:2px;font-weight:900;}
+.rr-item.ri-mint b{color:var(--mint-d);}
+.rr-item.ri-plum b{color:var(--plum-d);}
+.rr-item.ri-sun b{color:var(--sun-d);}
+.rr-item.ri-rose b{color:var(--rose-d);}
+.rr-item span{font-size:.74rem;color:#2E3D4F;line-height:1.5;}
+.if-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:9px;}
+.if-card{background:var(--white);border-radius:var(--r);box-shadow:var(--sh);padding:13px 15px;border:1px solid var(--border);}
+.if-trigger{font-size:.77rem;font-weight:900;color:var(--sun-d);border-bottom:2px solid #D97706;padding-bottom:5px;margin-bottom:6px;}
+.if-think{font-size:.77rem;color:#2E3D4F;line-height:1.5;}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:620px){
+  .ch-opts{grid-template-columns:1fr;}
+  .cmp-table{font-size:.73rem;}
+  .hero-h{font-size:1.2rem;}
+  .timer-num{font-size:2.6rem;}
+  .sort-zones{grid-template-columns:1fr;}
+  .tf-grid{grid-template-columns:1fr;}
+}
+
+/* ══ FOOTER ══ */
+.footer{background:#0A2A6E;color:rgba(255,255,255,.72);text-align:center;padding:16px;font-size:.73rem;margin-top:40px;}
+.footer b{color:#fff;}
+</style>
+</head>
+<body>
+<div id="notif"></div>
+
+<!-- ══════════ TOPBAR ══════════ -->
+<div class="topbar">
+  <div class="tb-inner">
+    <div class="tb-row1">
+      <div class="tb-title"><b>CBCS HIPAA &amp; Compliance</b> Mastery Lab</div>
+      <span class="part-badge">PART 2 OF 2</span>
+      <div class="tb-pts">
+        <span class="pt">⭐ <b id="gScore">0</b> pts</span>
+        <span class="pt">✅ <b id="gCorrect">0</b></span>
+        <span class="pt">🎯 <b id="gAcc">—</b></span>
+      </div>
+    </div>
+    <div class="nav-scroll">
+      <div class="nav">
+        <button class="ntab on" onclick="goTab(0)">🤝 Consent &amp; Auth</button>
+        <button class="ntab" onclick="goTab(1)">🔁 Use vs Disclosure</button>
+        <button class="ntab" onclick="goTab(2)">🛡️ Safeguards &amp; Auditing</button>
+        <button class="ntab" onclick="goTab(3)">📝 Question Bank</button>
+        <button class="ntab" onclick="goTab(4)">⏱️ Timed Challenge</button>
+        <button class="ntab" onclick="goTab(5)">⚡ Rapid Review</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 0 — CONSENT & AUTHORIZATION
+══════════════════════════════════════════ -->
+<div id="tab0" class="panel on">
+<div class="page">
+
+  <div class="hero hero-p2">
+    <div class="hero-eye">Part 2 Begins · Consent &amp; Authorization</div>
+    <div class="hero-h">Consent, Authorization,<br><em>and What They're NOT the Same As</em></div>
+    <p class="hero-p">Three related but distinct concepts. Most exam mistakes come from mixing them up. Every concept gets a check-in question the moment you learn it.</p>
+    <div class="hero-btns">
+      <button class="btn btn-sky btn-lg" onclick="document.getElementById('c0-start').scrollIntoView({behavior:'smooth'})">▼ Start Learning</button>
+    </div>
+  </div>
+
+  <div id="c0-start"></div>
+
+  <div class="dir">
+    <h3>📌 What To Do In This Tab</h3>
+    <ul>
+      <li>Read each concept block, then answer the check-in question before scrolling</li>
+      <li>Use the compare table to lock in the differences</li>
+      <li>Complete the scenario activity at the end</li>
+      <li><strong>Points available: up to 120 pts</strong></li>
+    </ul>
+  </div>
+
+  <!-- CONCEPT 1: Informed Consent -->
+  <div class="teach t-sky">
+    <div class="tlbl">Concept 1 — Informed Consent</div>
+    <h3>Informed Consent = Patient agrees to treatment after being fully informed</h3>
+    <ul>
+      <li>The provider explains the <strong>procedure, risks, benefits, and alternatives</strong></li>
+      <li>The patient has the chance to <strong>ask questions</strong></li>
+      <li>Patient agrees <strong>voluntarily and knowingly</strong></li>
+      <li>Usually required for <strong>surgery, invasive procedures, anesthesia</strong></li>
+      <li>Documented in the <strong>medical record</strong> with a signed consent form</li>
+      <li>This is a <strong>clinical/legal concept</strong> — it is about agreeing to receive care</li>
+    </ul>
+  </div>
+
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Informed Consent</div>
+    <div id="q0a" class="qblock" style="background:transparent;box-shadow:none;padding:0;border:none;">
+      <div class="q-meta">Question 1 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A surgeon explains a planned knee replacement procedure to a patient, including risks, alternatives, and expected recovery. The patient asks questions and signs the consent form. This is BEST described as:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('q0a',0,1,'HIPAA authorization is a specific permission for uses/disclosures of PHI not otherwise permitted. This scenario is about agreeing to a medical procedure — that is informed consent, not a HIPAA authorization.','')">A. A HIPAA authorization for release of medical records</button>
+        <button class="q-opt" onclick="ans('q0a',1,1,'✅ CORRECT! Informed consent is the clinical and legal process by which a patient is fully informed about a procedure — including risks, benefits, and alternatives — and voluntarily agrees to proceed. It applies to treatment decisions, not to release of information.','Informed consent = agreeing to treatment after being fully informed. It is a clinical/legal concept.')">B. Informed consent — the patient was fully informed and agreed to treatment</button>
+        <button class="q-opt" onclick="ans('q0a',2,1,'Implied consent occurs when a patient\'s actions indicate agreement without explicit discussion — like extending an arm for a blood draw. This scenario involved a formal, documented discussion and signature.','')">C. Implied consent — the patient implied agreement by asking questions</button>
+        <button class="q-opt" onclick="ans('q0a',3,1,'A Notice of Privacy Practices informs patients about how their PHI is used — it is not a treatment consent document.','')">D. A Notice of Privacy Practices for HIPAA compliance</button>
+      </div>
+      <div class="rat" id="rat-q0a"></div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 2: Implied Consent -->
+  <div class="teach t-mint">
+    <div class="tlbl">Concept 2 — Implied Consent</div>
+    <h3>Implied Consent = Consent shown through actions, not explicit discussion</h3>
+    <ul>
+      <li>No verbal or written agreement is made — the patient's <strong>actions imply consent</strong></li>
+      <li>Classic example: A patient extends their arm for a blood draw — no verbal agreement needed</li>
+      <li>Another example: A patient arrives for a scheduled appointment — implies consent for routine care</li>
+      <li>Applies to <strong>routine, low-risk procedures</strong> where the patient's cooperation makes agreement obvious</li>
+      <li>Does <strong>NOT</strong> apply to surgery, invasive procedures, or sensitive treatments — those need informed consent</li>
+    </ul>
+  </div>
+
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Implied Consent</div>
+    <div id="q0b" class="qblock" style="background:transparent;box-shadow:none;padding:0;border:none;">
+      <div class="q-meta">Question 2 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A nurse says "I need to check your blood pressure" and the patient holds out their arm without saying anything. This represents:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('q0b',0,1,'Informed consent requires a full explanation of risks, benefits, alternatives, and a signed form. Checking blood pressure is a routine, low-risk procedure — implied consent applies.','')">A. Informed consent — the nurse explained the procedure</button>
+        <button class="q-opt" onclick="ans('q0b',1,1,'✅ CORRECT! The patient\'s action of holding out their arm indicates agreement without requiring an explicit verbal or written statement. This is implied consent — the patient\'s cooperation in a routine, low-risk situation communicates agreement.','Implied consent = patient\'s action communicates agreement. No written or verbal statement required.')">B. Implied consent — the patient's action communicates agreement</button>
+        <button class="q-opt" onclick="ans('q0b',2,1,'A HIPAA authorization is a specific documented permission for uses/disclosures of PHI not permitted by the Privacy Rule. Blood pressure checks are clinical actions, not information release decisions.','')">C. A HIPAA authorization for sharing health information</button>
+        <button class="q-opt" onclick="ans('q0b',3,1,'There was consent — the patient\'s cooperative action (extending their arm) is an established form of implied consent for routine procedures.','')">D. No consent was given because nothing was signed</button>
+      </div>
+      <div class="rat" id="rat-q0b"></div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 3: HIPAA Authorization -->
+  <div class="teach t-plum">
+    <div class="tlbl">Concept 3 — HIPAA Authorization</div>
+    <h3>HIPAA Authorization = Specific written permission for PHI uses not covered by TPO</h3>
+    <ul>
+      <li>This is <strong>NOT the same as treatment consent</strong></li>
+      <li>Required when PHI will be used or disclosed for purposes <strong>outside of Treatment, Payment, or Operations (TPO)</strong></li>
+      <li>Examples needing authorization: <strong>marketing, research, sharing with employers, life insurance applications</strong></li>
+      <li>Must include: patient name, description of info, who receives it, purpose, expiration date, patient signature, right to revoke</li>
+      <li><strong>Key point:</strong> Treatment consent and HIPAA authorization are separate documents for separate purposes</li>
+    </ul>
+  </div>
+
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — HIPAA Authorization · True or False?</div>
+    <div class="tf-grid">
+      <div class="tf-card">
+        <div class="tf-stmt">"A patient's signature on a surgical consent form also authorizes the office to share their PHI with a pharmaceutical company for marketing research."</div>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="tfAns(this,'no','FALSE! A surgical consent form authorizes the PROCEDURE — not the release of PHI for marketing. Marketing disclosures require a SEPARATE HIPAA authorization. These are two entirely different documents for two different purposes.')">✅ True</button>
+          <button class="tf-btn" onclick="tfAns(this,'no','✅ FALSE — correct! Treatment consent and HIPAA authorization are separate. Signing a surgical consent form only authorizes the surgery. A separate HIPAA authorization is required for sharing PHI with a pharmaceutical company.')">❌ False</button>
+        </div>
+        <div class="tf-rev" id="tfr-0"></div>
+      </div>
+      <div class="tf-card">
+        <div class="tf-stmt">"A patient can revoke a HIPAA authorization at any time, as long as the action covered by the authorization has not already occurred."</div>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="tfAns(this,'yes','✅ TRUE — correct! Patients have the right to revoke a HIPAA authorization at any time in writing. However, revocation cannot undo actions that were already taken in reliance on the authorization before it was revoked.')">✅ True</button>
+          <button class="tf-btn" onclick="tfAns(this,'yes','This is TRUE. HIPAA gives patients the right to revoke authorizations. The right to revoke must actually be stated on the authorization form itself.')">❌ False</button>
+        </div>
+        <div class="tf-rev" id="tfr-1"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARE TABLE: Informed vs Implied vs Authorization -->
+  <div class="teach t-sky" style="padding:16px 20px;">
+    <div class="tlbl">Concept 4 — Comparison: All Three Side by Side</div>
+    <h3>Study this table — exam questions frequently mix these up</h3>
+  </div>
+  <div style="overflow-x:auto;margin-bottom:16px;">
+    <table class="cmp-table">
+      <thead><tr><th>Feature</th><th>Informed Consent</th><th>Implied Consent</th><th>HIPAA Authorization</th></tr></thead>
+      <tbody>
+        <tr><td><strong>What it is</strong></td><td>Agreement to receive treatment after full disclosure</td><td>Agreement shown through cooperative action</td><td>Written permission for non-TPO PHI use/disclosure</td></tr>
+        <tr><td><strong>Applies to</strong></td><td>Surgery, invasive procedures, sensitive treatments</td><td>Routine, low-risk procedures</td><td>Marketing, research, employer requests, life insurance</td></tr>
+        <tr><td><strong>How given</strong></td><td>Written + signed form</td><td>Patient action/behavior</td><td>Signed HIPAA authorization form</td></tr>
+        <tr><td><strong>About</strong></td><td>Clinical care decisions</td><td>Clinical care actions</td><td>Information release decisions</td></tr>
+        <tr><td><strong>Required for TPO?</strong></td><td class="tag-sun" style="white-space:nowrap;">Not applicable</td><td class="tag-sun" style="white-space:nowrap;">Not applicable</td><td><span class="tag-rose">No — TPO is already permitted</span></td></tr>
+        <tr><td><strong>Key trap</strong></td><td>Not the same as HIPAA auth</td><td>Cannot replace informed consent for risky procedures</td><td>Not the same as treatment consent</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CHECK-IN: Compare scenario -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Compare All Three</div>
+    <div id="q0c" class="qblock" style="background:transparent;box-shadow:none;padding:0;border:none;">
+      <div class="q-meta">Question 3 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A pharmaceutical company wants to contact patients from a medical practice to offer them information about a new medication. To share patient names and contact information with this company, the practice needs:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('q0c',0,2,'Implied consent applies to routine clinical procedures — a patient extending their arm, for example. It does not cover information release to third parties for marketing purposes.','')">A. Implied consent — patients implicitly allow the office to share their information</button>
+        <button class="q-opt" onclick="ans('q0c',1,2,'Informed consent relates to agreeing to treatment after full clinical disclosure. It does not cover the sharing of contact information for pharmaceutical marketing.','')">B. Informed consent — a signed treatment consent form is sufficient</button>
+        <button class="q-opt" onclick="ans('q0c',2,2,'✅ CORRECT! Marketing is NOT a TPO activity. Sharing patient contact information with a pharmaceutical company for marketing requires a specific signed HIPAA authorization from each patient. Without it, this disclosure is a HIPAA violation.','Marketing = NOT TPO. Must have a signed HIPAA authorization. No authorization = HIPAA violation.')">C. A specific signed HIPAA authorization from each patient — marketing is not a TPO activity</button>
+        <button class="q-opt" onclick="ans('q0c',3,2,'Manager approval does not replace the patient\'s legal right to control how their PHI is used. A HIPAA authorization must come from the patient themselves.','')">D. Manager approval — internal approval is sufficient for sharing patient information</button>
+      </div>
+      <div class="rat" id="rat-q0c"></div>
+    </div>
+  </div>
+
+  <button class="btn btn-sky" onclick="goTab(1)" style="margin-top:6px;">Continue → Use vs Disclosure ▶</button>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 1 — USE VS DISCLOSURE
+══════════════════════════════════════════ -->
+<div id="tab1" class="panel">
+<div class="page">
+  <div class="eyebrow">Tab 2 · Use vs Disclosure</div>
+  <h2 class="sh">🔁 Use vs. Disclosure of PHI</h2>
+  <p class="sp">Two related but distinct HIPAA concepts — tested directly on the CBCS exam.</p>
+
+  <div class="dir">
+    <h3>📌 What To Do</h3>
+    <ul>
+      <li>Learn the definition of each term, then test yourself immediately</li>
+      <li>Complete the "Use or Disclosure?" activity</li>
+      <li>Work through the scenario questions</li>
+      <li><strong>Points available: up to 110 pts</strong></li>
+    </ul>
+  </div>
+
+  <!-- CONCEPT 5: Use -->
+  <div class="teach t-sky">
+    <div class="tlbl">Concept 5 — Use of PHI</div>
+    <h3>USE = Sharing or accessing PHI WITHIN the organization</h3>
+    <ul>
+      <li>PHI stays <strong>inside</strong> the covered entity or its business associates</li>
+      <li>Examples: a biller accesses a patient's record to process a claim, a coder reviews documentation to assign codes, a compliance officer audits billing records</li>
+      <li>Information does <strong>not leave</strong> the organization</li>
+      <li>TPO activities within the organization = <strong>permitted uses</strong></li>
+    </ul>
+  </div>
+
+  <!-- CONCEPT 6: Disclosure -->
+  <div class="teach t-rose">
+    <div class="tlbl">Concept 6 — Disclosure of PHI</div>
+    <h3>DISCLOSURE = Sharing PHI OUTSIDE the organization</h3>
+    <ul>
+      <li>PHI is released to a party <strong>external</strong> to the covered entity</li>
+      <li>Examples: sending records to another provider, submitting a claim to an insurer, releasing records to a patient's attorney</li>
+      <li>Disclosures require <strong>valid justification</strong> — TPO, patient authorization, or legal requirement</li>
+      <li>Unauthorized disclosures = <strong>HIPAA violations</strong></li>
+    </ul>
+  </div>
+
+  <!-- CHECK-IN Q -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Use vs Disclosure Basics</div>
+    <div id="q1a" class="qblock" style="background:transparent;box-shadow:none;padding:0;border:none;">
+      <div class="q-meta">Question 4 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">The key difference between "use" and "disclosure" of PHI under HIPAA is:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('q1a',0,2,'Both use and disclosure can occur with electronic or paper records. The distinction is not about the format of the information.','')">A. Use applies only to electronic records; disclosure applies only to paper records</button>
+        <button class="q-opt" onclick="ans('q1a',1,2,'The patient\'s involvement does not define use vs. disclosure. The defining factor is whether PHI stays inside or goes outside the organization.','')">B. Use requires patient permission; disclosure does not</button>
+        <button class="q-opt" onclick="ans('q1a',2,2,'✅ CORRECT! "Use" refers to sharing or accessing PHI WITHIN the covered entity (internally). "Disclosure" refers to releasing PHI to parties OUTSIDE the covered entity. This internal vs. external distinction is the core definition tested on the CBCS exam.','Use = internal (stays inside the organization). Disclosure = external (leaves the organization).')">C. Use means sharing PHI internally; disclosure means releasing it to outside parties</button>
+        <button class="q-opt" onclick="ans('q1a',3,2,'Both use and disclosure require appropriate justification. TPO activities are generally permitted for both — the difference is internal vs. external, not permitted vs. unpermitted.','')">D. Disclosure is always prohibited; only use of PHI is allowed</button>
+      </div>
+      <div class="rat" id="rat-q1a"></div>
+    </div>
+  </div>
+
+  <!-- USE OR DISCLOSURE activity -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Use or Disclosure? Click Each Scenario</div>
+    <p style="font-size:.8rem;color:#3D4A5C;margin-bottom:10px;">Click each scenario to reveal whether it is a USE or DISCLOSURE of PHI.</p>
+
+    <div style="display:flex;flex-direction:column;gap:9px;" id="ud-activity">
+
+      <div class="act-card" id="ud0" style="cursor:pointer;" onclick="revealUD(0,'USE','A billing specialist accessing a patient\'s record internally is a USE — PHI stays within the organization. No external party received the information.')">
+        <div class="act-lbl">Tap to Reveal</div>
+        <div style="font-size:.84rem;color:#2E3D4F;font-weight:600;">A billing specialist accesses a patient's chart to verify a diagnosis code before submitting a claim.</div>
+        <div id="ud0-result" style="display:none;margin-top:8px;font-size:.8rem;font-weight:800;padding:6px 11px;border-radius:var(--rs);"></div>
+      </div>
+
+      <div class="act-card ac-rose" id="ud1" style="cursor:pointer;" onclick="revealUD(1,'DISCLOSURE','Sending a claim to a health insurance company is a DISCLOSURE — PHI is released to an external party (the insurer). This is a permitted disclosure under the Payment category of TPO.')">
+        <div class="act-lbl" style="color:var(--rose-d);">Tap to Reveal</div>
+        <div style="font-size:.84rem;color:#2E3D4F;font-weight:600;">A claim with the patient's diagnosis is submitted to Blue Cross Blue Shield for payment.</div>
+        <div id="ud1-result" style="display:none;margin-top:8px;font-size:.8rem;font-weight:800;padding:6px 11px;border-radius:var(--rs);"></div>
+      </div>
+
+      <div class="act-card ac-mint" id="ud2" style="cursor:pointer;" onclick="revealUD(2,'USE','A compliance officer reviewing billing records internally is a USE of PHI — the information does not leave the organization. This falls under Healthcare Operations within TPO.')">
+        <div class="act-lbl" style="color:var(--mint-d);">Tap to Reveal</div>
+        <div style="font-size:.84rem;color:#2E3D4F;font-weight:600;">A compliance officer reviews billing records to conduct an internal audit for quality assurance.</div>
+        <div id="ud2-result" style="display:none;margin-top:8px;font-size:.8rem;font-weight:800;padding:6px 11px;border-radius:var(--rs);"></div>
+      </div>
+
+      <div class="act-card ac-sun" id="ud3" style="cursor:pointer;" onclick="revealUD(3,'DISCLOSURE','Sending records to another provider is a DISCLOSURE — PHI is released externally. This is a permitted disclosure under the Treatment category of TPO and does not require separate authorization.')">
+        <div class="act-lbl" style="color:var(--sun-d);">Tap to Reveal</div>
+        <div style="font-size:.84rem;color:#2E3D4F;font-weight:600;">Medical records are faxed to a specialist who will be providing follow-up treatment.</div>
+        <div id="ud3-result" style="display:none;margin-top:8px;font-size:.8rem;font-weight:800;padding:6px 11px;border-radius:var(--rs);"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CHECK-IN Q2 -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Apply Use vs Disclosure</div>
+    <div id="q1b" class="qblock" style="background:transparent;box-shadow:none;padding:0;border:none;">
+      <div class="q-meta">Question 5 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A hospital shares a patient's PHI with its own billing department to process payment. Under HIPAA, this is classified as a:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('q1b',0,0,'✅ CORRECT! Sharing PHI within the same organization — for a permitted purpose like payment — is a USE. The information stays internal. TPO uses like this are permitted and do not require patient authorization.','Internal sharing for a TPO purpose = USE. Information stays within the covered entity.')">A. Permitted use — PHI shared internally for a payment purpose</button>
+        <button class="q-opt" onclick="ans('q1b',1,0,'A disclosure occurs when PHI goes OUTSIDE the organization to an external party. Sharing within the same hospital\'s billing department is internal — it is a use, not a disclosure.','')">B. Unauthorized disclosure — PHI was shared without authorization</button>
+        <button class="q-opt" onclick="ans('q1b',2,0,'A disclosure involves releasing PHI externally. This scenario keeps PHI within the same organization, so it is classified as a use.','')">C. A disclosure — the billing department is a separate entity</button>
+        <button class="q-opt" onclick="ans('q1b',3,0,'Internal payment activities are permitted uses under TPO. Authorization is only required for non-TPO uses and disclosures.','')">D. A violation — all sharing of PHI requires prior authorization</button>
+      </div>
+      <div class="rat" id="rat-q1b"></div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 7: Minimum Necessary -->
+  <div class="teach t-mint">
+    <div class="tlbl">Concept 7 — Minimum Necessary Standard</div>
+    <h3>Only access or share the minimum PHI needed for the specific purpose</h3>
+    <ul>
+      <li>Applies to both <strong>uses and disclosures</strong></li>
+      <li>Staff should only access the portions of a record needed for their specific task</li>
+      <li>Example: A biller processing a claim does not need to read a patient's full psychiatric history</li>
+      <li>Example: A receptionist confirming an appointment does not need access to detailed lab results</li>
+      <li><strong>Does NOT apply to:</strong> disclosures to providers for treatment, patients accessing their own records</li>
+    </ul>
+  </div>
+
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Minimum Necessary</div>
+    <div id="q1c" class="qblock" style="background:transparent;box-shadow:none;padding:0;border:none;">
+      <div class="q-meta">Question 6 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A billing specialist processing a routine office visit claim accesses the patient's full mental health history, medication list, and surgical records beyond what is needed for billing. This BEST violates:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('q1c',0,2,'The Security Rule governs technical safeguards for ePHI protection. Accessing more information than needed is a Privacy Rule violation — specifically the minimum necessary standard.','')">A. The HIPAA Security Rule — only electronic records are involved</button>
+        <button class="q-opt" onclick="ans('q1c',1,2,'While this may also involve confidentiality concerns, the most precise answer is that it violates the minimum necessary standard under the Privacy Rule.','')">B. The patient\'s right to informed consent</button>
+        <button class="q-opt" onclick="ans('q1c',2,2,'✅ CORRECT! Accessing more PHI than needed for the specific task violates the minimum necessary standard under the HIPAA Privacy Rule. Billing staff should only access the portions of a record necessary for their specific billing function.','Minimum necessary: only access what you need for the specific task. Accessing more = Privacy Rule violation.')">C. The minimum necessary standard under the Privacy Rule</button>
+        <button class="q-opt" onclick="ans('q1c',3,2,'Treatment disclosures to treating providers are an exception to minimum necessary — not this scenario. A billing specialist accessing extra records for no treatment purpose is a minimum necessary violation.','')">D. No rule — billing staff can access all records without restriction</button>
+      </div>
+      <div class="rat" id="rat-q1c"></div>
+    </div>
+  </div>
+
+  <button class="btn btn-sky" onclick="goTab(2)" style="margin-top:6px;">Continue → Safeguards, Training &amp; Auditing ▶</button>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 2 — SAFEGUARDS, TRAINING, AUDITING
+══════════════════════════════════════════ -->
+<div id="tab2" class="panel">
+<div class="page">
+  <div class="eyebrow">Tab 3 · Safeguards &amp; Compliance</div>
+  <h2 class="sh">🛡️ Safeguards, Training, Auditing &amp; Monitoring</h2>
+  <p class="sp">Beyond knowing the rules — understanding how organizations stay compliant every day.</p>
+
+  <div class="dir">
+    <h3>📌 What To Do</h3>
+    <ul>
+      <li>Read each concept, answer its check-in, then move to the next</li>
+      <li>Complete the scenario-based compliance activity</li>
+      <li>Build on the safeguard knowledge from Part 1</li>
+      <li><strong>Points available: up to 110 pts</strong></li>
+    </ul>
+  </div>
+
+  <!-- CONCEPT 8: Recap + Extend Safeguards -->
+  <div class="teach t-sky">
+    <div class="tlbl">Concept 8 — Safeguard Categories: Extended Examples</div>
+    <h3>Administrative · Physical · Technical — What Does Each Look Like in Practice?</h3>
+    <p style="margin-bottom:8px;">These three safeguard categories are required by the HIPAA Security Rule to protect electronic PHI:</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:16px;">
+    <div style="background:var(--white);border-radius:var(--r);box-shadow:var(--sh);padding:16px;border-top:5px solid var(--sky);border:1px solid var(--border);">
+      <div style="font-size:1.6rem;margin-bottom:6px;">📋</div>
+      <h3 style="font-size:.9rem;font-weight:900;color:var(--sky-d);margin-bottom:7px;">Administrative</h3>
+      <p style="font-size:.76rem;color:#2E3D4F;margin-bottom:5px;font-weight:700;">People + Policy controls:</p>
+      <ul style="font-size:.75rem;color:#2E3D4F;line-height:1.65;padding-left:14px;">
+        <li>Workforce HIPAA training program</li>
+        <li>Designated Privacy/Security Officer</li>
+        <li>Risk analysis and risk management</li>
+        <li>Sanction policy for violations</li>
+        <li>Workforce clearance procedures</li>
+        <li>Contingency/disaster recovery planning</li>
+      </ul>
+    </div>
+    <div style="background:var(--white);border-radius:var(--r);box-shadow:var(--sh);padding:16px;border-top:5px solid var(--mint);border:1px solid var(--border);">
+      <div style="font-size:1.6rem;margin-bottom:6px;">🔒</div>
+      <h3 style="font-size:.9rem;font-weight:900;color:var(--mint-d);margin-bottom:7px;">Physical</h3>
+      <p style="font-size:.76rem;color:#2E3D4F;margin-bottom:5px;font-weight:700;">Facility + Hardware controls:</p>
+      <ul style="font-size:.75rem;color:#2E3D4F;line-height:1.65;padding-left:14px;">
+        <li>Locked server and data rooms</li>
+        <li>Badge/key card access control</li>
+        <li>Workstation screen positioning</li>
+        <li>Visitor sign-in and escort policies</li>
+        <li>Secure device disposal procedures</li>
+        <li>Surveillance of secure areas</li>
+      </ul>
+    </div>
+    <div style="background:var(--white);border-radius:var(--r);box-shadow:var(--sh);padding:16px;border-top:5px solid var(--plum);border:1px solid var(--border);">
+      <div style="font-size:1.6rem;margin-bottom:6px;">💻</div>
+      <h3 style="font-size:.9rem;font-weight:900;color:var(--plum-d);margin-bottom:7px;">Technical</h3>
+      <p style="font-size:.76rem;color:#2E3D4F;margin-bottom:5px;font-weight:700;">Software + System controls:</p>
+      <ul style="font-size:.75rem;color:#2E3D4F;line-height:1.65;padding-left:14px;">
+        <li>Unique user IDs and strong passwords</li>
+        <li>Data encryption (at rest + in transit)</li>
+        <li>Automatic session logoff (timeout)</li>
+        <li>Audit logs for all access events</li>
+        <li>Role-based access controls (RBAC)</li>
+        <li>Emergency access procedures</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Safeguards in Context</div>
+    <div id="q2a" class="qblock" style="background:transparent;box-shadow:none;padding:0;border:none;">
+      <div class="q-meta">Question 7 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A healthcare organization designates a Security Officer responsible for developing and enforcing policies around access to electronic patient records. This is BEST classified as a:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('q2a',0,0,'✅ CORRECT! Designating a Security Officer and developing access policies are administrative safeguards — they involve workforce management, policy development, and organizational accountability structures required by the HIPAA Security Rule.','Designated Security Officer + policies = Administrative Safeguard.')">A. Administrative safeguard — workforce management and policy development</button>
+        <button class="q-opt" onclick="ans('q2a',1,0,'Physical safeguards address the physical environment — locks, access cards, workstation positioning. Designating a person to manage policies is administrative.','')">B. Physical safeguard — controlling physical access to areas</button>
+        <button class="q-opt" onclick="ans('q2a',2,0,'Technical safeguards involve software and system controls like passwords, encryption, and audit logs. Policy development and officer designation are administrative.','')">C. Technical safeguard — using technology to control access</button>
+        <button class="q-opt" onclick="ans('q2a',3,0,'Designating a Security Officer is specifically required by the HIPAA Security Rule as an administrative safeguard. It is not optional.','')">D. Optional — HIPAA does not require a designated Security Officer</button>
+      </div>
+      <div class="rat" id="rat-q2a"></div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 9: Training -->
+  <div class="teach t-mint">
+    <div class="tlbl">Concept 9 — Workforce Training</div>
+    <h3>Training is required, ongoing, and documented</h3>
+    <ul>
+      <li>All workforce members who access PHI must receive <strong>HIPAA training</strong></li>
+      <li>Training must occur at <strong>hire AND periodically after</strong> — not just once</li>
+      <li>Covered topics: privacy policies, security procedures, how to handle PHI, reporting violations</li>
+      <li>Training completion must be <strong>documented</strong> — records are reviewed during audits</li>
+      <li>Skipping training or failing to document it = <strong>administrative safeguard failure</strong></li>
+      <li>New threats and policies require <strong>updated training</strong></li>
+    </ul>
+  </div>
+
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Training</div>
+    <div id="q2b" class="qblock" style="background:transparent;box-shadow:none;padding:0;border:none;">
+      <div class="q-meta">Question 8 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A billing specialist has worked at the office for 5 years. She received HIPAA training when she was hired but has not received any training since. The office recently updated its privacy policies. This situation represents:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('q2b',0,1,'Not compliant. Initial training satisfies the onboarding requirement but does not replace periodic retraining. Policy changes specifically require updated training to ensure staff are aware of new requirements.','')">A. Full compliance — she received training when hired</button>
+        <button class="q-opt" onclick="ans('q2b',1,1,'✅ CORRECT! HIPAA requires periodic training — not just at hire. When policies change, updated training must be provided. Without it, staff may not know the current rules. Undocumented or incomplete training is an administrative safeguard deficiency.','Training must be periodic and updated when policies change. Once at hire is not sufficient.')">B. A compliance gap — training must be periodic and updated when policies change</button>
+        <button class="q-opt" onclick="ans('q2b',2,1,'Experience does not replace required training. HIPAA requires documented training regardless of a staff member\'s tenure or experience level.','')">C. Acceptable — experienced employees don't need retraining</button>
+        <button class="q-opt" onclick="ans('q2b',3,1,'Training is a HIPAA administrative safeguard requirement — not optional. Covered entities must train all workforce members and document that training.','')">D. Optional — HIPAA training is a suggestion, not a requirement</button>
+      </div>
+      <div class="rat" id="rat-q2b"></div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 10: Auditing -->
+  <div class="teach t-plum">
+    <div class="tlbl">Concept 10 — Auditing &amp; Access Log Monitoring</div>
+    <h3>Auditing finds problems before they become major violations</h3>
+    <ul>
+      <li><strong>Audit logs</strong> track who accessed what records, when, and from where</li>
+      <li>Routine review of logs can detect <strong>unauthorized or suspicious access</strong></li>
+      <li>Example: A compliance officer notices an employee accessed 200 patient records they have no clinical reason to view → triggers investigation</li>
+      <li><strong>Role-based access control (RBAC)</strong> limits what each staff member can see based on their job function</li>
+      <li>Audits support <strong>proactive compliance</strong> — catching issues before a breach occurs</li>
+      <li>Audit log review is a <strong>technical + administrative safeguard combined activity</strong></li>
+    </ul>
+  </div>
+
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Auditing</div>
+    <div id="q2c" class="qblock" style="background:transparent;box-shadow:none;padding:0;border:none;">
+      <div class="q-meta">Question 9 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">During a routine audit, a compliance officer finds that a front desk employee has been accessing the detailed clinical notes of patients she has no scheduling or billing role with. This finding is MOST consistent with:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('q2c',0,1,'Technical safeguard failures involve system controls like passwords and encryption. While access controls may have allowed this access, the audit finding itself reflects a compliance issue and likely a minimum necessary violation.','')">A. A technical safeguard failure — the system should have blocked access</button>
+        <button class="q-opt" onclick="ans('q2c',1,1,'✅ CORRECT! Accessing patient records without a job-related reason violates the minimum necessary standard and represents an unauthorized use of PHI. The audit correctly identified this behavior. This is exactly what access log auditing is designed to detect and what HIPAA compliance monitoring is built to prevent.','Auditing detected unauthorized access = minimum necessary violation = HIPAA compliance issue.')">B. An unauthorized use of PHI — minimum necessary violated; auditing correctly identified it</button>
+        <button class="q-opt" onclick="ans('q2c',2,1,'While training may be needed, the core issue identified by the audit is the unauthorized access to PHI — a HIPAA use violation. Training is a corrective action, not the primary classification of the issue.','')">C. A training deficiency only — the employee simply did not know the rules</button>
+        <button class="q-opt" onclick="ans('q2c',3,1,'Front desk employees can have legitimate access to some records for scheduling and billing. But accessing clinical notes for patients they have no role with exceeds their authorized access and violates HIPAA.','')">D. Normal behavior — front desk employees have full access to all records</button>
+      </div>
+      <div class="rat" id="rat-q2c"></div>
+    </div>
+  </div>
+
+  <!-- SCENARIO: Compliance Activity -->
+  <div class="teach t-sun">
+    <div class="tlbl">Concept 11 — Proactive vs Reactive Compliance</div>
+    <h3>Good compliance prevents violations — it doesn't just respond to them</h3>
+    <ul>
+      <li><strong>Proactive</strong>: Risk assessments, ongoing training, routine access log reviews, policy updates, workforce sanction policies</li>
+      <li><strong>Reactive</strong>: Investigating a breach after it occurs, notifying patients, reporting to HHS, paying fines</li>
+      <li>HIPAA requires proactive measures — offices must not wait for a breach to implement safeguards</li>
+      <li>The CBCS exam tests whether students can identify activities that <strong>prevent</strong> violations vs. those that <strong>respond</strong> to violations</li>
+    </ul>
+  </div>
+
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Proactive vs Reactive · True or False?</div>
+    <div class="tf-grid">
+      <div class="tf-card">
+        <div class="tf-stmt">"Conducting a HIPAA risk analysis before implementing new software is an example of proactive compliance."</div>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="tfAns(this,'yes','✅ TRUE! Conducting a risk analysis BEFORE implementing new software is a proactive compliance activity. It identifies potential vulnerabilities to ePHI before they become problems — exactly what HIPAA requires.')">✅ True</button>
+          <button class="tf-btn" onclick="tfAns(this,'yes','This is TRUE. Risk analysis before a system change is proactive HIPAA compliance — identifying risks in advance to protect ePHI.')">❌ False</button>
+        </div>
+        <div class="tf-rev" id="tfr-2"></div>
+      </div>
+      <div class="tf-card">
+        <div class="tf-stmt">"A covered entity only needs to implement safeguards after a HIPAA breach has been reported."</div>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="tfAns(this,'no','FALSE! HIPAA requires covered entities to implement safeguards BEFORE any breach occurs. Waiting for a breach to act is a compliance failure. Proactive safeguards — training, audits, risk analysis — are all required continuously.')">✅ True</button>
+          <button class="tf-btn" onclick="tfAns(this,'no','✅ FALSE — correct! Safeguards must be in place proactively — before breaches happen. HIPAA requires ongoing risk management, training, and monitoring. A covered entity cannot wait for a breach to implement required protections.')">❌ False</button>
+        </div>
+        <div class="tf-rev" id="tfr-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-sky" onclick="goTab(3)" style="margin-top:6px;">Continue → NHA-Style Question Bank ▶</button>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 3 — QUESTION BANK
+══════════════════════════════════════════ -->
+<div id="tab3" class="panel">
+<div class="page">
+  <div class="eyebrow">Tab 4 · NHA-Style Question Bank</div>
+  <h2 class="sh">📝 40+ NHA-Style Questions</h2>
+  <p class="sp">All topics. All question formats. Read each rationale carefully — that's the real learning.</p>
+
+  <div class="dir">
+    <h3>📌 What To Do</h3>
+    <ul>
+      <li>Use the category tabs to navigate to any topic</li>
+      <li>Answer questions — always read the rationale after every answer</li>
+      <li>+10 pts per correct answer</li>
+    </ul>
+  </div>
+
+  <!-- CATEGORY TABS -->
+  <div class="stabs">
+    <button class="stab on" onclick="showSub(0)">PHI &amp; Basics</button>
+    <button class="stab" onclick="showSub(1)">Privacy &amp; Security</button>
+    <button class="stab" onclick="showSub(2)">Consent &amp; Auth</button>
+    <button class="stab" onclick="showSub(3)">Use &amp; Disclosure</button>
+    <button class="stab" onclick="showSub(4)">Release &amp; Safeguards</button>
+    <button class="stab" onclick="showSub(5)">Compliance &amp; Auditing</button>
+  </div>
+
+  <!-- SUB-PANEL 0: PHI & Basics -->
+  <div id="sp0" class="spanel on">
+    <div id="bq1" class="qblock"><div class="q-meta">PHI &amp; Basics Q1 <span class="q-pts">+10 pts</span></div><div class="q-text">Under HIPAA, which of the following is classified as Protected Health Information (PHI)?</div><div class="q-opts"><button class="q-opt" onclick="ans('bq1',0,2,'A general city health report contains no individually identifying information. It is de-identified data — not PHI.','')">A. A general city health statistics report with no patient names</button><button class="q-opt" onclick="ans('bq1',1,2,'A hospital\'s financial report contains no patient identifiers or health information — it is not PHI.','')">B. A hospital\'s annual revenue statement</button><button class="q-opt" onclick="ans('bq1',2,2,'✅ CORRECT! A medical record number linked to a specific patient is a direct identifier. When combined with any health-related information, it constitutes PHI under HIPAA.','PHI = individually identifiable health information. A medical record number links to a person = identifier = PHI.')">C. A patient\'s medical record number linked to their diagnosis</button><button class="q-opt" onclick="ans('bq1',3,2,'Research data that has been fully de-identified — all 18 HIPAA identifiers removed — is not PHI. The key is whether individuals can be identified.','')">D. Anonymized research data with no patient identifiers</button></div><div class="rat" id="rat-bq1"></div></div>
+
+    <div id="bq2" class="qblock"><div class="q-meta">PHI &amp; Basics Q2 <span class="q-pts">+10 pts</span></div><div class="q-text">Which of the following is a HIPAA covered entity?</div><div class="q-opts"><button class="q-opt" onclick="ans('bq2',0,1,'A typical grocery store is not a covered entity. Its pharmacy operations might qualify if claims are submitted electronically, but the store overall is not.','')">A. A grocery store that does not accept insurance</button><button class="q-opt" onclick="ans('bq2',1,1,'✅ CORRECT! A health insurance company is a health plan — one of the three types of HIPAA covered entities (healthcare providers, health plans, and healthcare clearinghouses).','Covered entities: healthcare providers, health plans, healthcare clearinghouses.')">B. A health insurance company that pays medical claims</button><button class="q-opt" onclick="ans('bq2',2,1,'A general law firm is not a covered entity. However, if it handles PHI on behalf of a covered entity, it could be a business associate.','')">C. A law firm that handles workers\' compensation cases</button><button class="q-opt" onclick="ans('bq2',3,1,'A typical employer is not a covered entity — even if they maintain employee health records for group health plan administration. The plan itself may be a covered entity.','')">D. An employer that manages employee scheduling</button></div><div class="rat" id="rat-bq2"></div></div>
+
+    <div id="bq3" class="qblock"><div class="q-meta">PHI &amp; Basics Q3 <span class="q-pts">+10 pts</span></div><div class="q-text">A billing specialist leaves a printed patient statement on the counter where other patients can see it. This is BEST described as:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq3',0,3,'This is not compliant. Leaving PHI visible to unauthorized individuals is a confidentiality violation — whether it is brief or not.','')">A. Acceptable because the exposure was brief</button><button class="q-opt" onclick="ans('bq3',1,3,'The statement contains PHI — the patient\'s name, account information, and billing details tied to their care. It is not excluded from HIPAA.','')">B. Acceptable because billing statements are not PHI</button><button class="q-opt" onclick="ans('bq3',2,3,'The Privacy Rule protects paper records as well as electronic ones. Leaving a printed statement visible to others is a paper PHI violation.','')">C. A Security Rule violation — only electronic records matter</button><button class="q-opt" onclick="ans('bq3',3,3,'✅ CORRECT! Leaving a patient statement visible to unauthorized individuals is a Privacy Rule violation. Paper PHI must be protected just like electronic PHI. Minimum necessary and confidentiality requirements apply to all forms of PHI.','Paper PHI must be protected. Visible to unauthorized parties = Privacy Rule violation.')">D. A Privacy Rule violation — paper PHI was exposed to unauthorized individuals</button></div><div class="rat" id="rat-bq3"></div></div>
+
+    <div id="bq4" class="qblock"><div class="q-meta">PHI &amp; Basics Q4 <span class="q-pts">+10 pts</span></div><div class="q-text">Which of the following actions does NOT require a separate patient authorization under HIPAA?</div><div class="q-opts"><button class="q-opt" onclick="ans('bq4',0,2,'Sharing PHI with a pharmaceutical company for marketing purposes is NOT a TPO activity — it requires specific patient authorization.','')">A. Sharing patient contact info with a pharmaceutical company for drug marketing</button><button class="q-opt" onclick="ans('bq4',1,2,'Life insurance companies are not healthcare providers or plans. Sharing PHI with a life insurance company typically requires patient authorization unless the patient applied for a policy.','')">B. Disclosing PHI to a life insurance company</button><button class="q-opt" onclick="ans('bq4',2,2,'✅ CORRECT! Treatment, Payment, and Healthcare Operations (TPO) are the three permitted purposes for which PHI may be used or disclosed without specific authorization. Submitting a claim falls under Payment — no separate authorization needed.','Submitting a claim = Payment under TPO = no separate authorization required.')">C. Submitting a claim to the patient\'s insurance company for payment</button><button class="q-opt" onclick="ans('bq4',3,2,'Employment-related disclosures — except for certain workers\' comp situations — generally require patient authorization. The employer is not a healthcare entity in this context.','')">D. Disclosing PHI to the patient\'s employer for hiring purposes</button></div><div class="rat" id="rat-bq4"></div></div>
+  </div>
+
+  <!-- SUB-PANEL 1: Privacy & Security -->
+  <div id="sp1" class="spanel">
+    <div id="bq5" class="qblock"><div class="q-meta">Privacy &amp; Security Q1 <span class="q-pts">+10 pts</span></div><div class="q-text">The HIPAA Privacy Rule differs from the Security Rule primarily because the Privacy Rule:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq5',0,0,'✅ CORRECT! The Privacy Rule governs ALL forms of PHI — paper, oral, and electronic. The Security Rule applies only to ePHI (electronic protected health information). This is the most frequently tested distinction between the two rules.','Privacy Rule = all PHI. Security Rule = electronic PHI only.')">A. Applies to all forms of PHI, while the Security Rule applies only to electronic PHI</button><button class="q-opt" onclick="ans('bq5',1,0,'Both rules apply to covered entities and their business associates. They differ in scope of PHI covered, not in who must comply.','')">B. Only applies to healthcare providers, not health plans</button><button class="q-opt" onclick="ans('bq5',2,0,'Both rules have been in effect since their respective compliance deadlines in the early 2000s. They are both current active requirements.','')">C. Is newer than the Security Rule and supersedes it</button><button class="q-opt" onclick="ans('bq5',3,0,'Both rules are enforceable. Violations of either rule can result in civil and criminal penalties.','')">D. Is optional — only the Security Rule is enforceable</button></div><div class="rat" id="rat-bq5"></div></div>
+
+    <div id="bq6" class="qblock"><div class="q-meta">Privacy &amp; Security Q2 <span class="q-pts">+10 pts</span></div><div class="q-text">Encryption of electronic patient records and automatic session timeout on workstations are examples of:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq6',0,1,'Administrative safeguards focus on policies, procedures, workforce training, and management activities — not technology controls.','')">A. Administrative safeguards</button><button class="q-opt" onclick="ans('bq6',1,1,'✅ CORRECT! Encryption and automatic session timeout are technical safeguards — technology-based controls used to protect ePHI within software and electronic systems. Technical safeguards address access control, integrity, and transmission security for ePHI.','Encryption + session timeout = Technical Safeguards. Technology controls for ePHI.')">B. Technical safeguards</button><button class="q-opt" onclick="ans('bq6',2,1,'Physical safeguards address the tangible environment — locks, key cards, workstation positioning, and physical facility controls.','')">C. Physical safeguards</button><button class="q-opt" onclick="ans('bq6',3,1,'HIPAA explicitly requires technical safeguards for ePHI. Encryption and session timeout are standard required or addressable technical controls.','')">D. Not required by HIPAA</button></div><div class="rat" id="rat-bq6"></div></div>
+
+    <div id="bq7" class="qblock"><div class="q-meta">Privacy &amp; Security Q3 <span class="q-pts">+10 pts</span></div><div class="q-text">A healthcare office requires employees to wear visible ID badges and escorts visitors in and out of clinical areas. These are examples of:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq7',0,2,'Not technical safeguards. Technical controls involve software and systems — not physical identification or facility escort procedures.','')">A. Technical safeguards — controlling digital identity</button><button class="q-opt" onclick="ans('bq7',1,2,'Not administrative safeguards. While policies govern these procedures, the visible ID badges and escort procedures themselves are physical controls.','')">B. Administrative safeguards — policy-based identification</button><button class="q-opt" onclick="ans('bq7',2,2,'✅ CORRECT! ID badges and visitor escort procedures are physical safeguards. They control physical access to facilities where ePHI is stored or accessed — a required component of the HIPAA Security Rule.','Visible ID badges + visitor escort = Physical Safeguards. Control physical access to facilities.')">C. Physical safeguards — facility access controls</button><button class="q-opt" onclick="ans('bq7',3,2,'HIPAA physical safeguards are required for covered entities handling ePHI. These controls are not optional.','')">D. Not required by HIPAA — these are optional security measures</button></div><div class="rat" id="rat-bq7"></div></div>
+
+    <div id="bq8" class="qblock"><div class="q-meta">Privacy &amp; Security Q4 <span class="q-pts">+10 pts</span></div><div class="q-text">Under HIPAA, the minimum necessary standard requires that:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq8',0,0,'✅ CORRECT! The minimum necessary standard requires covered entities to limit access to and sharing of PHI to only what is needed for the specific task. It applies to all staff and all uses and disclosures — not just billing.','Minimum necessary = only access/share what you need for the specific task. Applies to all PHI uses.')">A. Only the minimum PHI required to accomplish the intended purpose should be accessed or disclosed</button><button class="q-opt" onclick="ans('bq8',1,0,'Minimum necessary does not mean a portion of the record. It means only what is needed for the specific purpose — which could be more or less than "a portion."','')">B. Patients should receive only a portion of their medical records when requested</button><button class="q-opt" onclick="ans('bq8',2,0,'Minimum necessary does not apply to disclosures to treating providers for treatment purposes — that is one of the explicit exceptions. Treating providers may need full records to provide care.','')">C. Treating physicians cannot access full patient records under any circumstance</button><button class="q-opt" onclick="ans('bq8',3,0,'The minimum necessary standard applies broadly — not just to disclosures. It applies to uses within the organization as well.','')">D. Only disclosures outside the organization must follow this standard</button></div><div class="rat" id="rat-bq8"></div></div>
+  </div>
+
+  <!-- SUB-PANEL 2: Consent & Auth -->
+  <div id="sp2" class="spanel">
+    <div id="bq9" class="qblock"><div class="q-meta">Consent &amp; Auth Q1 <span class="q-pts">+10 pts</span></div><div class="q-text">What is the primary distinction between informed consent and implied consent?</div><div class="q-opts"><button class="q-opt" onclick="ans('bq9',0,2,'Both types of consent occur in clinical settings. The distinction is how consent is communicated — explicitly through disclosure and signature vs. implicitly through action.','')">A. Informed consent occurs only in hospitals; implied consent occurs only in outpatient settings</button><button class="q-opt" onclick="ans('bq9',1,2,'Informed consent requires a signed document. Implied consent does not require a signature — it is conveyed through the patient\'s cooperative actions.','')">B. Implied consent requires a written form; informed consent does not</button><button class="q-opt" onclick="ans('bq9',2,2,'✅ CORRECT! Informed consent requires a full discussion of the procedure, risks, benefits, and alternatives — followed by a signed document. Implied consent occurs when the patient\'s actions indicate agreement without explicit discussion or signing (e.g., extending an arm for a blood draw).','Informed = full disclosure + signature. Implied = patient action communicates agreement. No signature needed.')">C. Informed consent requires full disclosure and a signature; implied consent is shown through the patient\'s actions</button><button class="q-opt" onclick="ans('bq9',3,2,'Both types of consent are legally and ethically recognized. Neither is superior — they apply in different contexts based on the nature of the procedure.','')">D. Informed consent is optional; implied consent is the only legally valid form</button></div><div class="rat" id="rat-bq9"></div></div>
+
+    <div id="bq10" class="qblock"><div class="q-meta">Consent &amp; Auth Q2 <span class="q-pts">+10 pts</span></div><div class="q-text">A patient signs a HIPAA authorization form. What does this permission specifically allow?</div><div class="q-opts"><button class="q-opt" onclick="ans('bq10',0,1,'✅ CORRECT! A HIPAA authorization specifically permits the use or disclosure of PHI for a purpose not otherwise allowed by the Privacy Rule — such as research, marketing, or sharing with a party not involved in care or payment. It is not a treatment consent document.','HIPAA authorization = specific permission for non-TPO use/disclosure. It is NOT treatment consent.')">A. The use or disclosure of PHI for a specific purpose not permitted by the Privacy Rule without authorization</button><button class="q-opt" onclick="ans('bq10',1,1,'A HIPAA authorization is about information use/disclosure — not treatment. A surgical consent form is the appropriate document for agreeing to treatment.','')">B. The patient\'s agreement to receive a surgical procedure</button><button class="q-opt" onclick="ans('bq10',2,1,'A HIPAA authorization is a specific permission for a defined use or disclosure. It does not grant the provider unlimited access to share PHI with any party.','')">C. The provider to share PHI with any party at any time</button><button class="q-opt" onclick="ans('bq10',3,1,'A HIPAA authorization is the patient\'s active grant of permission — not an opt-out. Opting out is a different concept related to facility directories or certain marketing situations.','')">D. The patient to opt out of receiving healthcare services</button></div><div class="rat" id="rat-bq10"></div></div>
+
+    <div id="bq11" class="qblock"><div class="q-meta">Consent &amp; Auth Q3 <span class="q-pts">+10 pts</span></div><div class="q-text">A patient arrives and rolls up their sleeve when the phlebotomist says "I need to draw some blood." No verbal or written agreement is made. This represents:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq11',0,3,'A HIPAA authorization is a specific written document for non-TPO information disclosures — not a routine clinical procedure.','')">A. A HIPAA authorization for the disclosure of blood test results</button><button class="q-opt" onclick="ans('bq11',1,3,'Informed consent is required for surgery, invasive procedures, or treatments with significant risk. A routine blood draw uses implied consent.','')">B. Informed consent — the phlebotomist explained the procedure fully</button><button class="q-opt" onclick="ans('bq11',2,3,'There IS consent here — it is just implied rather than explicit. Rolling up a sleeve in direct response to "I need to draw blood" clearly communicates agreement.','')">C. No consent — nothing was signed</button><button class="q-opt" onclick="ans('bq11',3,3,'✅ CORRECT! Rolling up a sleeve in direct response to the phlebotomist\'s explanation is a classic example of implied consent. The patient\'s cooperative action communicates agreement to a routine, low-risk procedure without requiring a verbal statement or signature.','Implied consent: patient\'s action (rolling up sleeve) communicates agreement. No signature needed for routine procedures.')">D. Implied consent — the patient\'s action communicates agreement to the routine procedure</button></div><div class="rat" id="rat-bq11"></div></div>
+
+    <div id="bq12" class="qblock"><div class="q-meta">Consent &amp; Auth Q4 <span class="q-pts">+10 pts</span></div><div class="q-text">Obtaining a patient's signed HIPAA authorization is NOT required when:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq12',0,1,'✅ CORRECT! Treatment, Payment, and Healthcare Operations (TPO) are the three permitted purposes for which PHI may be used or disclosed without a separate HIPAA authorization. All three scenarios listed involve TPO activities.','TPO activities do not require HIPAA authorization. All other uses/disclosures generally do.')">A. Sharing PHI for treatment, payment, or healthcare operations</button><button class="q-opt" onclick="ans('bq12',1,1,'Sharing PHI with a pharmaceutical company for marketing is NOT a TPO activity. It requires specific patient authorization.','')">B. Sharing PHI with a pharmaceutical company for drug promotion</button><button class="q-opt" onclick="ans('bq12',2,1,'Research disclosures generally require patient authorization unless specific exceptions apply (like IRB waiver for minimal-risk research).','')">C. Disclosing PHI to a research organization for a new study</button><button class="q-opt" onclick="ans('bq12',3,1,'Sharing PHI with an employer for employment decisions is not a permitted purpose without authorization. Employment is not a TPO activity.','')">D. Releasing PHI to an employer to support a hiring decision</button></div><div class="rat" id="rat-bq12"></div></div>
+  </div>
+
+  <!-- SUB-PANEL 3: Use & Disclosure -->
+  <div id="sp3" class="spanel">
+    <div id="bq13" class="qblock"><div class="q-meta">Use &amp; Disclosure Q1 <span class="q-pts">+10 pts</span></div><div class="q-text">A coder within a medical group reviews a patient's operative report to assign the correct procedure code. Under HIPAA, this action is classified as a:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq13',0,0,'✅ CORRECT! A coder accessing a patient record internally to perform coding is a USE of PHI — the information remains within the organization and is accessed for a legitimate Healthcare Operations purpose under TPO. No authorization is needed.','Coder accessing records internally for coding = USE. Healthcare Operations under TPO.')">A. Permitted use — internal access for a healthcare operations purpose</button><button class="q-opt" onclick="ans('bq13',1,0,'Disclosure involves releasing PHI to an external party. The coder is working within the same organization — this is internal access, which is a use.','')">B. Permitted disclosure — the coder is a separate party</button><button class="q-opt" onclick="ans('bq13',2,0,'Accessing records for coding is a legitimate healthcare operations activity. It is not a violation.','')">C. A violation — coders are not authorized to access medical records</button><button class="q-opt" onclick="ans('bq13',3,0,'Coding is a healthcare operations activity under TPO. Patient authorization is not required for this type of internal access.','')">D. Requires patient authorization — coders are not treating providers</button></div><div class="rat" id="rat-bq13"></div></div>
+
+    <div id="bq14" class="qblock"><div class="q-meta">Use &amp; Disclosure Q2 <span class="q-pts">+10 pts</span></div><div class="q-text">Medical records are sent to an outside collection agency to assist with collecting an unpaid patient balance. Under HIPAA, this is a:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq14',0,2,'Not a use. Sending records outside the organization to an external collection agency is a disclosure — PHI leaves the covered entity.','')">A. Use — the records stay within the healthcare system</button><button class="q-opt" onclick="ans('bq14',1,2,'A disclosure to a business associate for payment activities (like collections) is generally permitted under TPO with an appropriate Business Associate Agreement (BAA). It is not automatically a violation.','')">B. Violation — records cannot be sent to collection agencies</button><button class="q-opt" onclick="ans('bq14',2,2,'✅ CORRECT! Sending PHI to an external collection agency is a DISCLOSURE — PHI is released outside the organization. If the collection agency has a Business Associate Agreement (BAA) with the covered entity, this is a permitted disclosure for payment purposes under TPO.','Sending PHI to external agency = DISCLOSURE. Permitted under Payment/TPO with a Business Associate Agreement.')">C. Disclosure — PHI is shared with an external party for payment purposes</button><button class="q-opt" onclick="ans('bq14',3,2,'This is not implied consent. Implied consent applies to clinical procedures — not to PHI disclosures to collection agencies.','')">D. Implied consent — the patient implicitly agreed by incurring the debt</button></div><div class="rat" id="rat-bq14"></div></div>
+
+    <div id="bq15" class="qblock"><div class="q-meta">Use &amp; Disclosure Q3 <span class="q-pts">+10 pts</span></div><div class="q-text">Which of the following BEST describes an unauthorized disclosure of PHI?</div><div class="q-opts"><button class="q-opt" onclick="ans('bq15',0,3,'Sending records to a treating specialist for treatment is a permitted disclosure under HIPAA\'s TPO framework. No authorization is needed for treatment disclosures.','')">A. A physician\'s office sends records to a treating specialist for a referral</button><button class="q-opt" onclick="ans('bq15',1,3,'A billing department accessing records to process claims is a permitted internal use for payment — part of TPO.','')">B. A billing department accesses records to process a Medicare claim</button><button class="q-opt" onclick="ans('bq15',2,3,'Sharing records with a law enforcement agency in response to a valid court order is a permitted disclosure under HIPAA law enforcement provisions.','')">C. Records are shared with law enforcement pursuant to a valid court order</button><button class="q-opt" onclick="ans('bq15',3,3,'✅ CORRECT! Emailing a patient\'s diagnosis to their employer without authorization is a clear unauthorized disclosure. Employers are not covered entities, and sharing PHI with employers for non-occupational purposes requires explicit patient authorization.','Emailing PHI to employer without authorization = unauthorized disclosure = HIPAA violation.')">D. A billing specialist emails a patient\'s diagnosis to their employer without authorization</button></div><div class="rat" id="rat-bq15"></div></div>
+  </div>
+
+  <!-- SUB-PANEL 4: Release & Safeguards -->
+  <div id="sp4" class="spanel">
+    <div id="bq16" class="qblock"><div class="q-meta">Release &amp; Safeguards Q1 <span class="q-pts">+10 pts</span></div><div class="q-text">Before releasing medical records based on a signed authorization form, the billing office should verify:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq16',0,0,'✅ CORRECT! A valid release requires verifying: the form is complete (all required elements present), the signature is authentic, the form has not expired, the recipient is clearly identified, and the information to be released is specified. Incomplete or expired forms must not be processed.','Before releasing: verify completeness, valid signature, not expired, recipient identified, information specified.')">A. That the form is complete, signed, unexpired, and the recipient is authorized and identified</button><button class="q-opt" onclick="ans('bq16',1,0,'A signature alone is insufficient. The form must contain all required elements — description of info, recipient identity, expiration, purpose, and the right to revoke statement.','')">B. Only that the patient\'s signature is present</button><button class="q-opt" onclick="ans('bq16',2,0,'Facility policy should align with HIPAA requirements. Processing an incomplete form is not acceptable even with manager approval.','')">C. Manager approval before any release, regardless of the form content</button><button class="q-opt" onclick="ans('bq16',3,0,'All release requests must be evaluated. Attorneys do not have automatic access to patient records — a valid authorization from the patient is still required unless a court order or legal exception applies.','')">D. Nothing — attorneys always have the right to receive patient records</button></div><div class="rat" id="rat-bq16"></div></div>
+
+    <div id="bq17" class="qblock"><div class="q-meta">Release &amp; Safeguards Q2 <span class="q-pts">+10 pts</span></div><div class="q-text">A patient's release form is signed but the "description of information to be released" section is left blank. The office should:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq17',0,2,'Processing an incomplete form risks releasing incorrect or excessive information. The description field ensures the release is specific and limited to what was intended.','')">A. Process the release — the signature is what matters</button><button class="q-opt" onclick="ans('bq17',1,2,'The specialist should not fill in blank fields. That would alter a legal document and could constitute fraud. The requesting party must complete the missing information.','')">B. Fill in a general description and proceed</button><button class="q-opt" onclick="ans('bq17',2,2,'✅ CORRECT! A valid HIPAA authorization must specify what information is to be released. A blank description makes the form incomplete and invalid. The office must hold the release and contact the requesting party to have the form corrected before proceeding.','Blank required field = incomplete form = invalid authorization. Hold release until corrected.')">C. Hold the release and contact the requesting party to complete the missing field</button><button class="q-opt" onclick="ans('bq17',3,2,'Releasing all records is inappropriate when the form is incomplete. This could result in disclosing more than the patient intended to authorize.','')">D. Release all records since no specific restriction was noted</button></div><div class="rat" id="rat-bq17"></div></div>
+
+    <div id="bq18" class="qblock"><div class="q-meta">Release &amp; Safeguards Q3 <span class="q-pts">+10 pts</span></div><div class="q-text">A billing office installs privacy screens on all workstations facing high-traffic areas so that patients in the waiting room cannot see the screen. This is an example of a:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq18',0,1,'Not a technical safeguard. Technical controls involve software and system-level protections. A physical screen shield is a physical control.','')">A. Technical safeguard</button><button class="q-opt" onclick="ans('bq18',1,1,'✅ CORRECT! Privacy screens installed on workstations to prevent visual access by unauthorized individuals in public areas are physical safeguards. They protect ePHI from visual exposure at the workstation level.','Privacy screen = Physical Safeguard. Controls physical viewing of workstation content.')">B. Physical safeguard</button><button class="q-opt" onclick="ans('bq18',2,1,'Administrative safeguards involve policies, procedures, and training — not physical hardware installations.','')">C. Administrative safeguard</button><button class="q-opt" onclick="ans('bq18',3,1,'HIPAA physical safeguards include workstation security requirements. Privacy screens are a recognized physical control for protecting ePHI from unauthorized visual access.','')">D. Not required by HIPAA</button></div><div class="rat" id="rat-bq18"></div></div>
+  </div>
+
+  <!-- SUB-PANEL 5: Compliance & Auditing -->
+  <div id="sp5" class="spanel">
+    <div id="bq19" class="qblock"><div class="q-meta">Compliance &amp; Auditing Q1 <span class="q-pts">+10 pts</span></div><div class="q-text">A compliance officer reviews the EHR system's access logs and notices that a receptionist has accessed the records of 150 patients she has no scheduling connection to. This review is an example of:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq19',0,0,'✅ CORRECT! Reviewing access logs to identify inappropriate access patterns is a compliance monitoring and auditing activity. It is one of the most effective proactive tools for detecting unauthorized use of PHI before it escalates into a reportable breach.','Reviewing access logs to detect inappropriate access = Auditing/Monitoring = proactive compliance.')">A. Compliance auditing — proactively identifying unauthorized access through log review</button><button class="q-opt" onclick="ans('bq19',1,0,'Annual training is an administrative safeguard — not an auditing activity. The scenario describes log review and access pattern analysis.','')">B. Annual training requirement — scheduling remedial education for the employee</button><button class="q-opt" onclick="ans('bq19',2,0,'Physical safeguards address facilities and devices. This is a software-based audit log review — a technical and administrative compliance activity.','')">C. A physical safeguard activity — checking facility access records</button><button class="q-opt" onclick="ans('bq19',3,0,'Audit log review is a required compliance activity — not optional under HIPAA. The Security Rule specifically requires audit controls for ePHI.','')">D. Optional monitoring — not required by HIPAA</button></div><div class="rat" id="rat-bq19"></div></div>
+
+    <div id="bq20" class="qblock"><div class="q-meta">Compliance &amp; Auditing Q2 <span class="q-pts">+10 pts</span></div><div class="q-text">An employee is found to have violated HIPAA by accessing a coworker's medical record out of curiosity. Under HIPAA compliance, the organization should:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq20',0,2,'Ignoring a confirmed violation and taking no action is itself a compliance failure. HIPAA requires covered entities to have and enforce a sanction policy.','')">A. Take no action since no external disclosure occurred</button><button class="q-opt" onclick="ans('bq20',1,2,'Warning letters alone may not satisfy HIPAA\'s sanction policy requirement. Documented disciplinary action consistent with the organization\'s sanctions policy is required.','')">B. Send a verbal warning and take no further action</button><button class="q-opt" onclick="ans('bq20',2,2,'✅ CORRECT! HIPAA requires covered entities to have and enforce a sanction policy for workforce members who violate privacy and security policies. The appropriate response depends on the policy but must include documented disciplinary action. Ignoring or minimizing confirmed violations is itself a compliance failure.','Confirmed HIPAA violation = enforce sanction policy + document disciplinary action.')">C. Apply sanctions consistent with the organization\'s HIPAA sanction policy and document the action</button><button class="q-opt" onclick="ans('bq20',3,2,'The threshold for breach notification reporting depends on whether there was unsecured PHI involved and specific risk analysis findings — but taking no internal action is always wrong when a violation is confirmed.','')">D. Report to HHS immediately without any internal investigation</button></div><div class="rat" id="rat-bq20"></div></div>
+
+    <div id="bq21" class="qblock"><div class="q-meta">Compliance &amp; Auditing Q3 <span class="q-pts">+10 pts</span></div><div class="q-text">Which of the following BEST represents a proactive HIPAA compliance activity?</div><div class="q-opts"><button class="q-opt" onclick="ans('bq21',0,3,'Notifying patients of a breach is a reactive activity — it occurs after a violation has already happened.','')">A. Notifying patients after a PHI breach has been discovered</button><button class="q-opt" onclick="ans('bq21',1,3,'Paying an HHS fine is a reactive consequence of a compliance failure. It does not prevent violations.','')">B. Paying civil monetary penalties for a HIPAA violation</button><button class="q-opt" onclick="ans('bq21',2,3,'Responding to an OCR complaint is reactive — it occurs after a complaint has been filed about a potential violation.','')">C. Responding to an Office of Civil Rights (OCR) complaint</button><button class="q-opt" onclick="ans('bq21',3,3,'✅ CORRECT! Conducting a risk analysis before implementing new software is a proactive compliance activity. It identifies potential vulnerabilities to ePHI before they become problems — exactly what the HIPAA Security Rule requires covered entities to do continuously.','Risk analysis before new software = proactive compliance. Identify risks BEFORE they become violations.')">D. Conducting a risk analysis before implementing new software that handles ePHI</button></div><div class="rat" id="rat-bq21"></div></div>
+
+    <div id="bq22" class="qblock"><div class="q-meta">Compliance &amp; Auditing Q4 <span class="q-pts">+10 pts</span></div><div class="q-text">Role-based access control (RBAC) in an EHR system means that:</div><div class="q-opts"><button class="q-opt" onclick="ans('bq22',0,1,'✅ CORRECT! Role-based access control limits what each user can view or modify in the system based on their specific job role. A front desk scheduler sees scheduling-relevant data; a billing specialist sees billing-relevant data; a physician sees clinical notes. This is a technical safeguard that enforces minimum necessary at the system level.','RBAC = each user sees only what their job role requires. Technical safeguard enforcing minimum necessary.')">A. Each user can only access the portions of the EHR relevant to their specific job role</button><button class="q-opt" onclick="ans('bq22',1,1,'RBAC restricts access rather than providing universal access. It is designed to limit, not expand, access to PHI.','')">B. All employees can access all patient records at all times</button><button class="q-opt" onclick="ans('bq22',2,1,'RBAC does not determine billing amounts. It is an access management tool for information security.','')">C. Patients\' billing amounts are assigned by their role in the healthcare system</button><button class="q-opt" onclick="ans('bq22',3,1,'RBAC is a technical safeguard implemented in software systems. It is an active, enforced control — not a suggestion.','')">D. It is a suggestion for administrators, not a required control</button></div><div class="rat" id="rat-bq22"></div></div>
+  </div>
+
+  <div style="margin-top:16px;text-align:center;">
+    <button class="btn btn-plum btn-lg" onclick="goTab(4)">⏱️ Take the Full Timed Challenge ▶</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 4 — TIMED CHALLENGE
+══════════════════════════════════════════ -->
+<div id="tab4" class="panel">
+<div class="page">
+  <div class="eyebrow">Full Exam Simulation</div>
+  <h2 class="sh">⏱️ Full Timed Challenge</h2>
+  <p class="sp">30 randomized questions · 45 seconds each · 10 pts per correct · Final exam-style test</p>
+
+  <!-- START -->
+  <div id="ch-start" style="text-align:center;padding:32px 0;">
+    <div style="font-size:4rem;margin-bottom:14px;">⏱️</div>
+    <h3 style="font-size:1.25rem;font-weight:900;margin-bottom:8px;color:var(--ink);">Ready for the Full Challenge?</h3>
+    <p style="color:#3D4A5C;font-size:.86rem;margin-bottom:8px;">30 questions · 45 seconds each · 300 pts possible</p>
+    <p style="color:#3D4A5C;font-size:.82rem;margin-bottom:24px;">Covers all topics from both Part 1 and Part 2. Questions randomize every attempt.</p>
+    <button class="btn btn-plum btn-lg" onclick="startCH()">🚀 Start Challenge</button>
+  </div>
+
+  <!-- ACTIVE -->
+  <div id="ch-active" style="display:none;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;background:var(--white);border-radius:var(--r);padding:14px 18px;box-shadow:var(--sh);border:1px solid var(--border);">
+      <div style="text-align:center;">
+        <div class="timer-num" id="ch-timer">45</div>
+        <div style="font-size:.7rem;color:#3D4A5C;font-weight:600;">seconds</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:2rem;font-weight:900;color:var(--mint);" id="ch-score-d">0</div>
+        <div style="font-size:.7rem;color:#3D4A5C;font-weight:600;">points</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:2rem;font-weight:800;color:var(--plum);" id="ch-qnum">1/30</div>
+        <div style="font-size:.7rem;color:#3D4A5C;font-weight:600;">question</div>
+      </div>
+    </div>
+    <div class="prog-dots" id="ch-dots"></div>
+    <div class="ch-q-box">
+      <div class="ch-cat" id="ch-cat">Category</div>
+      <div class="ch-q-text" id="ch-q">Question</div>
+      <div class="ch-opts" id="ch-opts"></div>
+      <div class="rat" id="ch-rat" style="margin-top:12px;"></div>
+    </div>
+    <button class="btn btn-sky" id="ch-next" onclick="chNext()" style="display:none;margin-top:6px;">Next Question →</button>
+  </div>
+
+  <!-- RESULT -->
+  <div id="ch-result" style="display:none;">
+    <div class="result-box">
+      <div style="font-size:3rem;margin-bottom:10px;">🏆</div>
+      <h3 style="font-size:1.15rem;font-weight:900;margin-bottom:7px;color:var(--ink);">Challenge Complete!</h3>
+      <div class="result-score" id="ch-final-pts"></div>
+      <div style="font-size:1rem;font-weight:800;margin-bottom:8px;" id="ch-grade"></div>
+      <div style="font-size:.83rem;color:#3D4A5C;margin-bottom:20px;" id="ch-detail"></div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-plum" onclick="startCH()">🔄 Try Again</button>
+        <button class="btn btn-rose" onclick="showMissed()">📋 Review Missed</button>
+        <button class="btn btn-mint" onclick="goTab(5)">⚡ Rapid Review</button>
+      </div>
+    </div>
+    <div id="ch-missed" style="display:none;margin-top:22px;"></div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 5 — RAPID REVIEW
+══════════════════════════════════════════ -->
+<div id="tab5" class="panel">
+<div class="page">
+  <div class="eyebrow">Final Review</div>
+  <h2 class="sh">⚡ Rapid Review — Everything in One Place</h2>
+  <p class="sp">Study this before your exam. All key concepts, rules, and traps summarized clearly.</p>
+
+  <!-- HIPAA Basics -->
+  <div class="rr-section">
+    <div class="rr-head rr-h-sky">💡 HIPAA Made Simple</div>
+    <div class="rr-grid">
+      <div class="rr-item ri-sky"><b>What is HIPAA?</b><span>1996 federal law protecting patient health information. Sets national privacy, security, and confidentiality standards.</span></div>
+      <div class="rr-item ri-sky"><b>Covered Entities</b><span>Healthcare providers · Health plans · Healthcare clearinghouses. All must comply with HIPAA.</span></div>
+      <div class="rr-item ri-sky"><b>Business Associates</b><span>Third parties handling PHI on behalf of covered entities. Must sign a Business Associate Agreement (BAA).</span></div>
+      <div class="rr-item ri-sky"><b>PHI</b><span>Individually identifiable health information. Includes name+diagnosis, SSN, account number, member ID, phone with health info.</span></div>
+      <div class="rr-item ri-sky"><b>De-identified data</b><span>No identifiers present = NOT PHI. HIPAA does not apply to de-identified data.</span></div>
+      <div class="rr-item ri-sky"><b>TPO</b><span>Treatment, Payment, Operations. PHI may be used/disclosed for these without separate authorization.</span></div>
+    </div>
+  </div>
+
+  <!-- Privacy vs Security -->
+  <div class="rr-section">
+    <div class="rr-head rr-h-plum">🔐 Privacy Rule vs Security Rule</div>
+    <div style="overflow-x:auto;margin-bottom:8px;">
+      <table class="cmp-table">
+        <thead><tr><th>Feature</th><th>Privacy Rule</th><th>Security Rule</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Covers</strong></td><td>ALL forms of PHI (paper, oral, electronic)</td><td>Electronic PHI (ePHI) ONLY</td></tr>
+          <tr><td><strong>Focus</strong></td><td>Use and disclosure rules</td><td>Safeguards to protect ePHI</td></tr>
+          <tr><td><strong>Safeguards</strong></td><td>Not the primary focus</td><td>Admin · Physical · Technical</td></tr>
+          <tr><td><strong>Paper records?</strong></td><td><span class="tag-mint">Yes — covered</span></td><td><span class="tag-rose">No — electronic only</span></td></tr>
+          <tr><td><strong>Patient rights</strong></td><td>Access, amend, restrict, complain</td><td>Not the primary focus</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Safeguards -->
+  <div class="rr-section">
+    <div class="rr-head rr-h-mint">🛡️ Safeguard Categories (Security Rule)</div>
+    <div class="rr-grid">
+      <div class="rr-item ri-sky"><b>Administrative</b><span>Policies · Workforce training · Designated Security/Privacy Officer · Risk analysis · Sanction policy · Contingency planning</span></div>
+      <div class="rr-item ri-mint"><b>Physical</b><span>Locked server rooms · Badge/key card access · Privacy screens · Visitor logs · Secure device disposal · Surveillance</span></div>
+      <div class="rr-item ri-plum"><b>Technical</b><span>Passwords/unique IDs · Encryption · Automatic logoff · Audit logs · Role-based access control (RBAC) · Emergency access</span></div>
+    </div>
+  </div>
+
+  <!-- Consent & Auth -->
+  <div class="rr-section">
+    <div class="rr-head rr-h-sun">🤝 Consent &amp; Authorization</div>
+    <div class="rr-grid">
+      <div class="rr-item ri-sun"><b>Informed Consent</b><span>Full disclosure of risks, benefits, alternatives. Signed form. For surgery and invasive procedures. About treatment decisions.</span></div>
+      <div class="rr-item ri-sun"><b>Implied Consent</b><span>Patient's action communicates agreement. No signature needed. For routine, low-risk procedures (e.g., blood draw, blood pressure).</span></div>
+      <div class="rr-item ri-sun"><b>HIPAA Authorization</b><span>Specific written permission for NON-TPO uses/disclosures. Required for: marketing, research, employer requests, life insurance.</span></div>
+      <div class="rr-item ri-sun"><b>Key Trap</b><span>Treatment consent ≠ HIPAA authorization. They are separate documents for separate purposes.</span></div>
+    </div>
+  </div>
+
+  <!-- Use vs Disclosure -->
+  <div class="rr-section">
+    <div class="rr-head rr-h-rose">🔁 Use vs Disclosure</div>
+    <div class="rr-grid">
+      <div class="rr-item ri-sky"><b>USE</b><span>PHI shared or accessed WITHIN the covered entity. Internal. Billing dept, coders, compliance officer reviewing records = USE.</span></div>
+      <div class="rr-item ri-rose"><b>DISCLOSURE</b><span>PHI released OUTSIDE the organization. External. Claims to insurer, records to specialist, records to attorney = DISCLOSURE.</span></div>
+      <div class="rr-item ri-plum"><b>Minimum Necessary</b><span>Only access/share the minimum PHI needed for the task. Applies to uses and disclosures. Exception: treatment disclosures to providers.</span></div>
+    </div>
+  </div>
+
+  <!-- Release of Info -->
+  <div class="rr-section">
+    <div class="rr-head rr-h-sky">📋 Release of Information Checklist</div>
+    <div class="rr-grid">
+      <div class="rr-item ri-sky"><b>Before releasing, verify:</b><span>Form is signed · Description of info is complete · Recipient is identified · Purpose stated · Expiration date present · Right to revoke noted</span></div>
+      <div class="rr-item ri-rose"><b>Incomplete form =</b><span>DO NOT RELEASE. Hold and request correction. Never fill in missing fields yourself.</span></div>
+      <div class="rr-item ri-sun"><b>Unauthorized release</b><span>Releasing PHI without valid authorization or legal basis = HIPAA violation regardless of intent.</span></div>
+      <div class="rr-item ri-mint"><b>Family members</b><span>Adult patients control their own PHI. Family does not automatically have access — written authorization required.</span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- IF-SEE-THINK -->
+  <h3 style="font-size:.9rem;font-weight:900;color:var(--sun-d);margin-bottom:12px;">🎯 If You See This → Think This</h3>
+  <div class="if-grid">
+    <div class="if-card"><div class="if-trigger">Paper chart left visible in hallway</div><div class="if-think">→ Privacy Rule violation · Paper PHI protected · Confidentiality breach</div></div>
+    <div class="if-card"><div class="if-trigger">EHR login + encryption required</div><div class="if-think">→ Security Rule · Technical safeguards · ePHI protection</div></div>
+    <div class="if-card"><div class="if-trigger">Annual HIPAA training required</div><div class="if-think">→ Administrative safeguard · Workforce training · Must be documented</div></div>
+    <div class="if-card"><div class="if-trigger">Locked server room, badge access</div><div class="if-think">→ Physical safeguards · Facility + device controls</div></div>
+    <div class="if-card"><div class="if-trigger">Marketing disclosure to pharma</div><div class="if-think">→ NOT TPO · Requires HIPAA authorization · Cannot assume permission</div></div>
+    <div class="if-card"><div class="if-trigger">Patient rolls up sleeve for blood draw</div><div class="if-think">→ Implied consent · Action = agreement · No signature for routine</div></div>
+    <div class="if-card"><div class="if-trigger">Pre-surgery consent form signed</div><div class="if-think">→ Informed consent · Not HIPAA authorization · Different purpose</div></div>
+    <div class="if-card"><div class="if-trigger">Coder accesses chart for coding</div><div class="if-think">→ USE · Internal · Healthcare Operations under TPO · Permitted</div></div>
+    <div class="if-card"><div class="if-trigger">Records sent to specialist</div><div class="if-think">→ DISCLOSURE · External · Treatment under TPO · Permitted</div></div>
+    <div class="if-card"><div class="if-trigger">Access log review finds 150 records viewed</div><div class="if-think">→ Auditing · Compliance monitoring · Minimum necessary violation likely</div></div>
+    <div class="if-card"><div class="if-trigger">Employer calls for lab results</div><div class="if-think">→ NOT authorized · Employer ≠ covered entity · Authorization required</div></div>
+    <div class="if-card"><div class="if-trigger">Release form missing expiration date</div><div class="if-think">→ Incomplete = invalid · Do NOT release · Contact requester first</div></div>
+  </div>
+
+  <div style="background:linear-gradient(135deg,#0A2A6E,#1255A3,#51138C);border-radius:var(--rl);padding:24px;text-align:center;color:#fff;margin-top:22px;">
+    <div style="font-family:var(--fd);font-size:1.3rem;margin-bottom:6px;">🎓 You've Completed Both Parts!</div>
+    <p style="font-size:.85rem;color:rgba(255,255,255,.9);max-width:480px;margin:0 auto 16px;line-height:1.6;">You've covered all HIPAA and Regulatory Compliance topics tested on the CBCS exam — with a concept check-in after every concept, 40+ practice questions, a full timed challenge, and this rapid review. You are ready.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-ghost" onclick="goTab(4)">🔄 Retake Challenge</button>
+      <button class="btn btn-ghost" onclick="goTab(3)">📝 Back to Question Bank</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <b>CBCS HIPAA &amp; Regulatory Compliance Interactive Mastery Lab — Part 2 of 2</b><br>
+  Consent &amp; Authorization · Use vs Disclosure · Safeguards &amp; Auditing · 40+ Question Bank · Full Timed Challenge · Rapid Review<br>
+  Designed and Curriculum Developed by <b>Hilary Homaii</b>
+</footer>
+
+<script>
+// ── GLOBALS ──
+let score=0,answered=0,correct=0;
+let selChip=null;
+const tfMap={'tfr-0':'no','tfr-1':'yes','tfr-2':'yes','tfr-3':'no'};
+let arPts=0,arCor=0,arTot=0;
+
+// ── TABS ──
+function goTab(n){
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('on',i===n));
+  document.querySelectorAll('.ntab').forEach((t,i)=>t.classList.toggle('on',i===n));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── SUB-PANELS (Question Bank) ──
+function showSub(n){
+  document.querySelectorAll('.spanel').forEach((p,i)=>p.classList.toggle('on',i===n));
+  document.querySelectorAll('.stab').forEach((t,i)=>t.classList.toggle('on',i===n));
+}
+
+// ── ACCORDION ──
+function toggleAcc(id){
+  const b=document.getElementById(id),h=b.previousElementSibling;
+  const o=b.classList.contains('open');
+  b.classList.toggle('open',!o);h.classList.toggle('open',!o);
+}
+
+// ── NOTIF ──
+function notif(msg,bad){
+  const el=document.getElementById('notif');
+  el.textContent=msg;el.className='show'+(bad?' bad':'');
+  clearTimeout(el._t);el._t=setTimeout(()=>el.className='',2700);
+}
+
+// ── STATS ──
+function updateStats(){
+  document.getElementById('gScore').textContent=score;
+  document.getElementById('gCorrect').textContent=correct;
+  document.getElementById('gAcc').textContent=answered>0?Math.round(correct/answered*100)+'%':'—';
+}
+
+// ── ANSWER ──
+function ans(id,chosen,correctIdx,ratTxt,clueTxt){
+  const b=document.getElementById(id);
+  if(b.dataset.done) return;
+  b.dataset.done='1';
+  const opts=b.querySelectorAll('.q-opt');
+  const rat=document.getElementById('rat-'+id);
+  const ok=chosen===correctIdx;
+  opts.forEach((o,i)=>{o.disabled=true;if(i===correctIdx)o.classList.add('ok');else if(i===chosen&&!ok)o.classList.add('no');});
+  answered++;if(ok){score+=10;correct++;notif('+10 pts ✓');}else notif('Review rationale ↓',true);
+  updateStats();
+  if(rat&&ratTxt){
+    rat.classList.add('show');
+    rat.innerHTML=`<div class="rat-hd ${ok?'rh-ok':'rh-no'}">${ok?'✅ Correct!':'📖 Here\'s Why...'}</div>`+
+      `<div class="rat-bd">${ratTxt}`+(clueTxt?`<div class="rat-clue">💡 ${clueTxt}</div>`:'')+'</div>';
+  }
+}
+
+// ── TRUE/FALSE ──
+function tfAns(btn,ans,msg){
+  const card=btn.closest('.tf-card');
+  if(card.dataset.done) return;
+  card.dataset.done='1';
+  const rev=card.querySelector('.tf-rev');
+  const correctAns=tfMap[rev.id];
+  const ok=(ans===correctAns);
+  card.querySelectorAll('.tf-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(ok?'tf-ok':'tf-no');
+  rev.textContent=msg;rev.classList.add('show');
+  answered++;if(ok){score+=5;correct++;notif('+5 pts ✓');}else notif('Review below ↓',true);
+  updateStats();
+}
+
+// ── USE/DISCLOSURE REVEAL ──
+function revealUD(idx,type,explanation){
+  const card=document.getElementById('ud'+idx);
+  if(card.dataset.done) return;
+  card.dataset.done='1';
+  card.style.cursor='default';
+  const res=document.getElementById('ud'+idx+'-result');
+  res.style.display='block';
+  const isUse=(type==='USE');
+  res.style.background=isUse?'var(--sky-l)':'var(--rose-l)';
+  res.style.color=isUse?'var(--sky-text)':'var(--rose-text)';
+  res.style.border=isUse?'1px solid var(--sky)':'1px solid var(--rose)';
+  res.style.borderRadius='var(--rs)';
+  res.style.padding='7px 11px';
+  res.innerHTML=`${isUse?'📋 USE':'📤 DISCLOSURE'} — ${explanation}`;
+  score+=5;correct++;answered++;updateStats();notif('+5 pts ✓');
+}
+
+// ── CHIP SORT ──
+function pickChip(el){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+  if(!el.classList.contains('chip-ok')&&!el.classList.contains('chip-no')){
+    el.classList.add('sel');selChip=el;
+  }
+}
+function dropChip(zone,zoneId){
+  if(!selChip) return;
+  const ok=selChip.dataset.ans===zoneId;
+  selChip.classList.remove('sel');
+  if(ok){
+    selChip.classList.add('chip-ok');
+    const cl=selChip.cloneNode(true);cl.onclick=null;
+    zone.appendChild(cl);
+    selChip.style.display='none';
+    score+=5;correct++;answered++;updateStats();notif('+5 pts ✓');
+  } else {
+    selChip.classList.add('chip-no');
+    setTimeout(()=>selChip.classList.remove('chip-no'),600);
+    answered++;notif('Not quite — try again',true);
+  }
+  selChip=null;
+}
+
+// ── TIMED CHALLENGE POOL ──
+const chPool=[
+  {q:"The HIPAA Privacy Rule applies to:",opts:["Electronic PHI only","All forms of PHI — paper, oral, electronic","Only inpatient medical records","Only billing and coding records"],cor:1,cat:"Privacy Rule",rat:"The Privacy Rule governs ALL forms of PHI. The Security Rule applies to ePHI only."},
+  {q:"The HIPAA Security Rule specifically protects:",opts:["All PHI in any format","Only paper records","Electronic PHI (ePHI) only","Verbal communications only"],cor:2,cat:"Security Rule",rat:"The Security Rule applies specifically to ePHI — electronically created, received, maintained, or transmitted PHI."},
+  {q:"Annual HIPAA workforce training is BEST classified as a:",opts:["Physical safeguard","Technical safeguard","Administrative safeguard","Privacy Rule requirement only"],cor:2,cat:"Safeguards",rat:"Workforce training is an administrative safeguard — it involves policies, procedures, and workforce management activities."},
+  {q:"Locked server rooms and visitor badge requirements are examples of:",opts:["Administrative safeguards","Physical safeguards","Technical safeguards","Privacy Rule exceptions"],cor:1,cat:"Safeguards",rat:"Physical safeguards control physical access to facilities and equipment where ePHI is stored or processed."},
+  {q:"Role-based access control (RBAC) and data encryption are examples of:",opts:["Administrative safeguards","Physical safeguards","Technical safeguards","Privacy Rule provisions"],cor:2,cat:"Safeguards",rat:"Technical safeguards use software and technology controls to protect ePHI — including access controls, encryption, and audit logs."},
+  {q:"Informed consent is BEST described as:",opts:["A HIPAA authorization for releasing medical records","Agreement to treatment after full disclosure of risks, benefits, and alternatives","Agreement shown through patient actions without formal discussion","Permission to share PHI with a research company"],cor:1,cat:"Consent",rat:"Informed consent is a clinical/legal process — the patient is fully informed about a procedure and voluntarily agrees. It is about treatment, not information release."},
+  {q:"Implied consent is BEST demonstrated by:",opts:["Signing a surgical consent form","Extending an arm for a routine blood draw without verbal agreement","Signing a HIPAA authorization form","Reviewing and initialing a Notice of Privacy Practices"],cor:1,cat:"Consent",rat:"Implied consent occurs when the patient's action (extending arm for blood draw) communicates agreement to a routine, low-risk procedure without explicit verbal or written consent."},
+  {q:"A HIPAA authorization is specifically required for:",opts:["Submitting a claim to a health insurance plan","Sharing PHI with a treating specialist","Releasing PHI to a pharmaceutical company for marketing","Accessing records for internal quality assurance"],cor:2,cat:"Authorization",rat:"Marketing is NOT a TPO activity. Releasing PHI for marketing purposes requires a specific signed HIPAA authorization from each patient."},
+  {q:"Under HIPAA, 'use' of PHI refers to:",opts:["Releasing PHI to an outside organization","Sharing or accessing PHI within the covered entity","Disclosing PHI to a patient's attorney","Sending a claim to an insurance company"],cor:1,cat:"Use vs Disclosure",rat:"'Use' = internal sharing or accessing within the covered entity. 'Disclosure' = releasing PHI to external parties."},
+  {q:"Which of the following is a DISCLOSURE of PHI?",opts:["A coder reviews a chart internally to assign codes","A billing specialist accesses records for claims","A compliance officer audits internal billing records","Records are faxed to a specialist for ongoing care"],cor:3,cat:"Use vs Disclosure",rat:"Faxing records to a specialist is a disclosure — PHI leaves the organization. The others are internal uses."},
+  {q:"The minimum necessary standard means:",opts:["Staff must use a minimum number of electronic systems","Only the minimum PHI needed for a task should be accessed or shared","Patients should receive only minimal information","Medical records must be kept to a minimum length"],cor:1,cat:"Privacy Rule",rat:"Minimum necessary limits PHI access and disclosure to what is actually needed for the specific task at hand."},
+  {q:"A valid HIPAA authorization must include all EXCEPT:",opts:["A description of the information to be released","The patient's Social Security Number","An expiration date or event","The patient's signature and date"],cor:1,cat:"Authorization",rat:"A HIPAA authorization requires: description of info, recipient identity, purpose, expiration, patient signature, and right to revoke. SSN is not a required element of the authorization form itself."},
+  {q:"A patient's release form is received but the description of information to be released is blank. The office should:",opts:["Release all records since the form is signed","Fill in a reasonable description and proceed","Hold the release and contact the requester to complete the missing field","Ask the manager to approve the release as-is"],cor:2,cat:"Release of Information",rat:"An incomplete authorization is invalid. The office must hold the release and require the form to be completed before any PHI is disclosed."},
+  {q:"A patient's adult sibling calls asking for the patient's medical records. No authorization is on file. The office should:",opts:["Provide the records — family has automatic access","Ask the sibling to come in and sign for them","Decline and explain that a written patient authorization is required","Verify the sibling's identity and then release"],cor:2,cat:"Release of Information",rat:"Adult patients control access to their own PHI. Family members do not automatically qualify for access. A signed patient authorization is required."},
+  {q:"Which action represents an AUTHORIZED disclosure of PHI?",opts:["Emailing a diagnosis to the patient's employer without consent","Releasing records based on a complete, valid signed authorization","Discussing a patient's case in a crowded waiting room","Sharing records with a pharmaceutical company without authorization"],cor:1,cat:"Release of Information",rat:"A complete, valid signed authorization meets all HIPAA requirements for a permitted disclosure. The other options are all violations."},
+  {q:"Reviewing EHR access logs to detect unauthorized record access is BEST described as:",opts:["A physical safeguard","Proactive compliance monitoring and auditing","Reactive breach response","A Privacy Rule disclosure"],cor:1,cat:"Auditing",rat:"Reviewing access logs to identify inappropriate access patterns is proactive compliance monitoring — a key auditing activity under HIPAA."},
+  {q:"A covered entity is required to conduct a HIPAA risk analysis:",opts:["Only after a breach is reported","Once at initial HIPAA implementation and never again","On an ongoing basis to identify and address vulnerabilities to ePHI","Only when requested by the Office for Civil Rights"],cor:2,cat:"Compliance",rat:"Risk analysis is an ongoing administrative safeguard requirement. Covered entities must continuously assess and manage risks to ePHI — not just at startup or after a breach."},
+  {q:"A staff member accesses a neighbor's medical record out of personal curiosity. This BEST violates:",opts:["The Security Rule — technical safeguards were bypassed","The Privacy Rule — PHI was accessed without a legitimate purpose (minimum necessary)","The Notice of Privacy Practices","The patient's right to informed consent"],cor:1,cat:"Privacy Rule",rat:"Accessing PHI without a job-related reason violates the minimum necessary standard under the Privacy Rule. Even if no information was shared, unauthorized access is still a violation."},
+  {q:"Which of the following is a proactive HIPAA compliance activity?",opts:["Paying a penalty after an OCR investigation","Notifying patients after a data breach","Conducting risk analysis before new software implementation","Responding to a patient complaint about a violation"],cor:2,cat:"Compliance",rat:"Conducting risk analysis before implementing new software is proactive — identifying risks BEFORE they become violations. The others are all reactive responses."},
+  {q:"A physician's office shares PHI with its billing department to process a claim. This is a:",opts:["Disclosure requiring patient authorization","Violation of the minimum necessary standard","Permitted use under TPO — payment activity","Disclosure to a business associate"],cor:2,cat:"Use vs Disclosure",rat:"Sharing PHI internally within the same covered entity for a payment purpose is a permitted USE under TPO. It does not require authorization."},
+  {q:"Which of the following is NOT PHI under HIPAA?",opts:["Medical record number linked to a patient","Name combined with date of surgery","Anonymized data with all 18 identifiers removed","Insurance member ID number"],cor:2,cat:"PHI",rat:"De-identified data — with all HIPAA identifiers removed — is not PHI. HIPAA's protections only apply when health information can be linked to an individual."},
+  {q:"A billing specialist emailing a patient's diagnosis to their employer without authorization is BEST classified as:",opts:["A permitted disclosure for payment purposes","An internal use of PHI","An unauthorized disclosure of PHI","A Privacy Rule use for healthcare operations"],cor:2,cat:"Disclosure",rat:"Sending PHI to an employer without authorization is an unauthorized disclosure — a HIPAA violation. Employers are not authorized to receive employee PHI without a signed patient authorization."},
+  {q:"When must a separate HIPAA authorization be obtained?",opts:["When submitting a Medicare claim","When a coder reviews a chart to assign codes","When a quality assurance team audits billing records","When disclosing PHI to a life insurance company for a policy application"],cor:3,cat:"Authorization",rat:"Disclosing PHI to a life insurance company for a policy application is not a TPO activity. It requires a specific signed HIPAA authorization from the patient."},
+  {q:"The HIPAA sanction policy requires that:",opts:["All violations result in immediate termination","Workforce members who violate HIPAA policies face documented disciplinary action","Patients must be notified of all internal staff violations","Violations are kept confidential to protect the employee"],cor:1,cat:"Compliance",rat:"HIPAA administrative safeguards require covered entities to have and enforce a sanction policy — appropriate disciplinary action for workforce members who violate HIPAA policies."},
+  {q:"Sharing PHI with a treating specialist for a patient referral is BEST described as:",opts:["An unauthorized disclosure requiring authorization","A permitted disclosure under the Treatment category of TPO","A use of PHI within the covered entity","A violation of the minimum necessary standard"],cor:1,cat:"Disclosure",rat:"Sharing PHI with a treating provider for treatment purposes is a permitted disclosure under TPO — specifically the Treatment category. No additional authorization is needed."},
+  {q:"A covered entity that experiences a HIPAA breach must notify:",opts:["Only the state health department","The affected individuals and HHS; media if large breach","Only the Office for Civil Rights","Only their business associates"],cor:1,cat:"Compliance",rat:"HIPAA's Breach Notification Rule requires covered entities to notify: affected individuals, HHS, and (for breaches affecting 500+ in a state) prominent media. Notification must occur within 60 days of discovery."},
+  {q:"Which scenario represents implied consent?",opts:["A patient signs a surgical consent form after a full explanation","A patient nods and opens their mouth when the doctor says 'say aah'","A patient signs a HIPAA authorization for records release","A patient reviews and signs a Notice of Privacy Practices"],cor:1,cat:"Consent",rat:"A patient opening their mouth in response to 'say aah' is implied consent — their action communicates agreement to a routine, low-risk exam. No signature or formal discussion required."},
+  {q:"The Security Rule requires covered entities to implement safeguards to protect:",opts:["All health information including paper records","Electronic PHI (ePHI) specifically","Verbal communications about patient care","Financial records unrelated to patient care"],cor:1,cat:"Security Rule",rat:"The Security Rule specifically addresses ePHI — electronic protected health information. Paper and verbal PHI are addressed by the Privacy Rule, not the Security Rule's safeguard framework."},
+  {q:"A covered entity must have a Business Associate Agreement (BAA) when:",opts:["Sharing PHI with a treating specialist","Submitting a claim to Medicare","Sharing PHI with an outside company that performs billing services on their behalf","Sharing records internally between departments"],cor:2,cat:"HIPAA Basics",rat:"A BAA is required when a covered entity shares PHI with a business associate — an outside organization that handles PHI on the covered entity's behalf. Internal sharing does not require a BAA."},
+  {q:"Which of the following is a patient right under the HIPAA Privacy Rule?",opts:["The right to demand all staff share their PHI with anyone","The right to access and request amendments to their own medical records","The right to prevent all insurance claims from being processed","The right to refuse all HIPAA protections"],cor:1,cat:"Privacy Rule",rat:"HIPAA gives patients the right to access their own medical records and request amendments if they believe information is inaccurate. Covered entities must respond to these requests in most cases within 30 days."},
+];
+
+let chQs=[],chIdx=0,chScore=0,chCorrect=0,chMissed=[],chTimer=null,chTime=45;
+
+function startCH(){
+  document.getElementById('ch-start').style.display='none';
+  document.getElementById('ch-result').style.display='none';
+  document.getElementById('ch-active').style.display='block';
+  chQs=[...chPool].sort(()=>Math.random()-.5);
+  chIdx=0;chScore=0;chCorrect=0;chMissed=[];
+  buildDots();loadCHQ();
+}
+
+function buildDots(){
+  document.getElementById('ch-dots').innerHTML=chQs.map((_,i)=>`<div class="dot" id="dot-${i}"></div>`).join('');
+}
+
+function loadCHQ(){
+  const q=chQs[chIdx];
+  document.getElementById('ch-qnum').textContent=`${chIdx+1}/30`;
+  document.getElementById('ch-cat').textContent=q.cat;
+  document.getElementById('ch-q').textContent=q.q;
+  document.getElementById('ch-rat').className='rat';
+  document.getElementById('ch-rat').innerHTML='';
+  document.getElementById('ch-next').style.display='none';
+
+  const opts=document.getElementById('ch-opts');
+  opts.innerHTML=q.opts.map((o,i)=>`<button class="ch-opt" onclick="chAns(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('');
+
+  document.querySelectorAll('.dot').forEach((d,i)=>{
+    d.className='dot'+(i<chIdx?(chMissed.some(m=>m===chQs[i])?' dot-no':' dot-ok'):i===chIdx?' dot-cur':'');
+  });
+
+  clearInterval(chTimer);chTime=45;
+  const t=document.getElementById('ch-timer');
+  t.textContent=45;t.classList.remove('urgent');
+  chTimer=setInterval(()=>{
+    chTime--;t.textContent=chTime;
+    if(chTime<=10)t.classList.add('urgent');
+    if(chTime<=0){clearInterval(chTimer);chAns(-1);}
+  },1000);
+}
+
+function chAns(chosen){
+  clearInterval(chTimer);
+  const q=chQs[chIdx];
+  const btns=document.getElementById('ch-opts').querySelectorAll('.ch-opt');
+  btns.forEach((b,i)=>{
+    b.disabled=true;
+    if(i===q.cor) b.classList.add('ch-ok');
+    else if(i===chosen&&chosen!==q.cor) b.classList.add('ch-no');
+  });
+  const ok=chosen===q.cor;
+  if(ok){chScore+=10;chCorrect++;score+=10;correct++;}
+  else chMissed.push(q);
+  answered++;
+  document.getElementById('ch-score-d').textContent=chScore;
+  updateStats();
+  const dot=document.getElementById('dot-'+chIdx);
+  if(dot)dot.className='dot '+(ok?'dot-ok':'dot-no');
+  const rat=document.getElementById('ch-rat');
+  rat.classList.add('show');
+  rat.innerHTML=`<div class="rat-hd ${ok?'rh-ok':'rh-no'}">${ok?'✅ Correct!':(chosen<0?'⏰ Time Up!':'❌ Incorrect')}</div><div class="rat-bd">${q.rat}</div>`;
+  document.getElementById('ch-next').style.display='inline-block';
+}
+
+function chNext(){
+  chIdx++;
+  if(chIdx>=chQs.length)endCH();
+  else loadCHQ();
+}
+
+function endCH(){
+  document.getElementById('ch-active').style.display='none';
+  document.getElementById('ch-result').style.display='block';
+  const pct=Math.round(chCorrect/chQs.length*100);
+  const el=document.getElementById('ch-final-pts');
+  el.textContent=chScore+' pts';
+  el.style.color=pct>=80?'var(--mint)':pct>=60?'var(--sky)':'var(--sun)';
+  let g,gc;
+  if(pct>=90){g='Excellent — Exam Ready! 🌟';gc='rg-a';}
+  else if(pct>=75){g='Good Work — Review Weak Areas 📚';gc='rg-b';}
+  else{g='Keep Studying — Retake to Build Mastery 💪';gc='rg-c';}
+  document.getElementById('ch-grade').innerHTML=`<span class="${gc}">${g}</span>`;
+  document.getElementById('ch-detail').textContent=`${chCorrect}/30 correct (${pct}%)`;
+}
+
+function showMissed(){
+  const d=document.getElementById('ch-missed');
+  if(!chMissed.length){
+    d.innerHTML='<p style="color:var(--mint);font-weight:800;text-align:center;padding:16px;">🎉 No missed questions!</p>';
+    d.style.display='block';return;
+  }
+  d.style.display='block';
+  d.innerHTML='<h3 style="color:var(--rose);font-size:.9rem;font-weight:900;margin-bottom:12px;">📋 Missed Questions — Study These Carefully</h3>'+
+    chMissed.map(q=>`<div style="background:var(--white);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;border-left:4px solid var(--rose);box-shadow:var(--sh);border:1px solid var(--border);">
+      <div style="font-size:.68rem;font-weight:900;color:var(--rose-d);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;">${q.cat}</div>
+      <div style="font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:7px;line-height:1.4;">${q.q}</div>
+      <div style="font-size:.78rem;background:var(--mint-l);border:1px solid var(--mint);border-radius:var(--rs);padding:6px 11px;color:var(--mint-text);font-weight:800;margin-bottom:5px;">✅ Correct: ${q.opts[q.cor]}</div>
+      <div style="font-size:.77rem;color:#2E3D4F;line-height:1.55;">${q.rat}</div>
+    </div>`).join('');
+}
+
+updateStats();
+</script>
+</body>
+</html>
